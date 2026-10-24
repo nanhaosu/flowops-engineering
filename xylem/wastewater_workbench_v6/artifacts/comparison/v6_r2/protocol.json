@@ -1,0 +1,4573 @@
+{
+  "schema": 6,
+  "scope": "12 related synthetic tasks/profile combinations, 48h; no field/human outcome claim",
+  "workflows": [
+    "status_table",
+    "linked_workbench"
+  ],
+  "diagnostic": "keep_producing: same rights and shared advice, intentionally declines production deferral; not the product baseline",
+  "decision_minutes": 60,
+  "observation_minutes": 15,
+  "simultaneous_information": true,
+  "advice": "tasks.recommend, shared strong-simple 4h public-only advice",
+  "baseline": "competent status table supports bulk advice; no forced omissions, typing errors or extra approval burden",
+  "user_time": "unmeasured; participants=0; no authored action count treated as human saving",
+  "stop_rule": "retain all ties, adverse operational/manufacturing costs and unresolved tasks; no parameter tuning after freeze",
+  "configurations": [
+    {
+      "case_id": "maintenance_delay",
+      "variant": "base",
+      "configuration": {
+        "name": "检修延期",
+        "firms": {
+          "A": {
+            "id": "A",
+            "name": "甲 · 精细加工",
+            "route": "R1",
+            "stock": 60,
+            "capacity": 90,
+            "production_rate": 13.0,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "B": {
+            "id": "B",
+            "name": "乙 · 批次生产",
+            "route": "R1",
+            "stock": 65,
+            "capacity": 100,
+            "production_rate": 16.25,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 3,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "C": {
+            "id": "C",
+            "name": "丙 · 材料清洗",
+            "route": "R2",
+            "stock": 45,
+            "capacity": 85,
+            "production_rate": 9.75,
+            "rate": 15,
+            "max_rate": 35,
+            "ack_delay": 2,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "D": {
+            "id": "D",
+            "name": "丁 · 表面处理",
+            "route": "R2",
+            "stock": 50,
+            "capacity": 75,
+            "production_rate": 6.5,
+            "rate": 10,
+            "max_rate": 30,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "routes": {
+          "R1": {
+            "id": "R1",
+            "name": "专线一",
+            "capacity": 60.0,
+            "buffer": 98.0,
+            "stock": 24.5,
+            "delay": 2,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          },
+          "R2": {
+            "id": "R2",
+            "name": "专线二",
+            "capacity": 45.0,
+            "buffer": 84.0,
+            "stock": 20.0,
+            "delay": 4,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "downstream_capacity": 65.0,
+        "end_tick": 192,
+        "production_end": 192,
+        "start_hour": 8,
+        "step_minutes": 15,
+        "disturbances": [
+          {
+            "minute": 120,
+            "kind": "capacity",
+            "value": 25
+          },
+          {
+            "minute": 120,
+            "kind": "capacity_confirmation",
+            "value": 25,
+            "confirmed_at_minutes": 120,
+            "valid_until_minutes": 2880,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic observed report"
+          },
+          {
+            "minute": 360,
+            "kind": "maintenance_notice",
+            "expected_restore_minutes": 720,
+            "announced_at_minutes": 360,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic announced repair delay; receiving confirmation remains separate"
+          },
+          {
+            "minute": 720,
+            "kind": "capacity",
+            "value": 65
+          },
+          {
+            "minute": 720,
+            "kind": "capacity_confirmation",
+            "value": 65,
+            "confirmed_at_minutes": 720,
+            "valid_until_minutes": 2880,
+            "revision": 2,
+            "basis": "assumed",
+            "source": "synthetic observed report"
+          },
+          {
+            "minute": 720,
+            "kind": "maintenance",
+            "maintenance_complete": true
+          },
+          {
+            "minute": 720,
+            "kind": "production_confirmation",
+            "firm": "B",
+            "record": {
+              "owner": "production_owner_B",
+              "restart_ready": true,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 1
+            }
+          }
+        ],
+        "assumptions": [
+          "合成工程演练；公开资料仅支持问题和约束类别，所有数值均非现场校准。",
+          "四家持续产水48小时；同一混合设备画像、共同通知额度和恢复保障。",
+          "水类标签仅代表假设接纳约定；不证明化学相容、去除效率或达标排放。",
+          "仅一种固定暂存池和一台共享转移泵；新增资源不等于调度算法增益。",
+          "未来扰动留在私有场景中；控制器只看当前公开观测和已知产水计划。",
+          "接收量不是达标处理量；暂存、回送在途和剩余库存始终计入责任。",
+          "Only firm B may request production deferral under dated synthetic owner authority.",
+          "Deferred manufacturing remains unmet output; tail and restart cleaning add physical water. No monetary or water-saving claim."
+        ],
+        "substep_minutes": 5,
+        "auto_ack": true,
+        "capabilities": {
+          "A": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "on_off",
+            "duty_rate": 20,
+            "flow_levels": [
+              0,
+              20
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "B": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30,
+              40
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          },
+          "C": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "window",
+            "duty_rate": 15,
+            "flow_levels": [
+              0,
+              15
+            ],
+            "windows_minutes": [
+              [
+                0,
+                360
+              ],
+              [
+                420,
+                1800
+              ],
+              [
+                1860,
+                2880
+              ]
+            ],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "D": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          }
+        },
+        "notice_budget": {
+          "limit": 32,
+          "window_minutes": 1440
+        },
+        "restart_guard": {
+          "enabled": true
+        },
+        "recovery": {
+          "maintenance_complete": false,
+          "temporary_supply_available": false,
+          "process_ready": null,
+          "effluent_verified": null,
+          "capacity_confirmation": {
+            "value": 65,
+            "confirmed_at_minutes": 0,
+            "valid_until_minutes": 2880,
+            "revision": 0,
+            "basis": "assumed",
+            "source": "synthetic receiving acceptance; not actual plant approval"
+          }
+        },
+        "maintenance_plan": {
+          "expected_restore_minutes": 480,
+          "announced_at_minutes": 0,
+          "revision": 0,
+          "basis": "assumed",
+          "source": "synthetic initial maintenance ETA; not receiving confirmation"
+        },
+        "disposition": {
+          "enabled": true,
+          "storage_capacity_m3": 120,
+          "pump_rate_m3_h": 20,
+          "travel_minutes": 30,
+          "ack_delay_minutes": 30,
+          "setup_minutes": 15,
+          "return_route": "R1",
+          "firm_types": {
+            "A": "pretreated_process",
+            "B": "pretreated_process",
+            "C": "pretreated_process",
+            "D": "saline_stream"
+          },
+          "acceptance": {
+            "storage": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            },
+            "plant": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process",
+                "saline_stream"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            }
+          },
+          "initial_inventory": {}
+        },
+        "production_control": {
+          "profiles": {
+            "B": {
+              "basis": "assumed",
+              "source": "v6 predeclared synthetic production profile; not field calibrated",
+              "owner": "production_owner_B",
+              "authorized": true,
+              "authorized_until_minutes": 2880,
+              "authority_revision": 0,
+              "ack_minutes": 30,
+              "stop_lead_minutes": 30,
+              "restart_lead_minutes": 45,
+              "batch_minutes": 120,
+              "min_pause_minutes": 60,
+              "residual_minutes": 60,
+              "residual_rate_m3_h": 4.0625,
+              "restart_flush_m3": 4,
+              "planned_units_per_hour": 100,
+              "restart_ready": false,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_id": "maintenance_delay",
+      "variant": "slow_response",
+      "configuration": {
+        "name": "检修延期",
+        "firms": {
+          "A": {
+            "id": "A",
+            "name": "甲 · 精细加工",
+            "route": "R1",
+            "stock": 60,
+            "capacity": 90,
+            "production_rate": 13.0,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "B": {
+            "id": "B",
+            "name": "乙 · 批次生产",
+            "route": "R1",
+            "stock": 65,
+            "capacity": 100,
+            "production_rate": 16.25,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 3,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "C": {
+            "id": "C",
+            "name": "丙 · 材料清洗",
+            "route": "R2",
+            "stock": 45,
+            "capacity": 85,
+            "production_rate": 9.75,
+            "rate": 15,
+            "max_rate": 35,
+            "ack_delay": 2,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "D": {
+            "id": "D",
+            "name": "丁 · 表面处理",
+            "route": "R2",
+            "stock": 50,
+            "capacity": 75,
+            "production_rate": 6.5,
+            "rate": 10,
+            "max_rate": 30,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "routes": {
+          "R1": {
+            "id": "R1",
+            "name": "专线一",
+            "capacity": 60.0,
+            "buffer": 98.0,
+            "stock": 24.5,
+            "delay": 2,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          },
+          "R2": {
+            "id": "R2",
+            "name": "专线二",
+            "capacity": 45.0,
+            "buffer": 84.0,
+            "stock": 20.0,
+            "delay": 4,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "downstream_capacity": 65.0,
+        "end_tick": 192,
+        "production_end": 192,
+        "start_hour": 8,
+        "step_minutes": 15,
+        "disturbances": [
+          {
+            "minute": 120,
+            "kind": "capacity",
+            "value": 25
+          },
+          {
+            "minute": 120,
+            "kind": "capacity_confirmation",
+            "value": 25,
+            "confirmed_at_minutes": 120,
+            "valid_until_minutes": 2880,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic observed report"
+          },
+          {
+            "minute": 360,
+            "kind": "maintenance_notice",
+            "expected_restore_minutes": 720,
+            "announced_at_minutes": 360,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic announced repair delay; receiving confirmation remains separate"
+          },
+          {
+            "minute": 720,
+            "kind": "capacity",
+            "value": 65
+          },
+          {
+            "minute": 720,
+            "kind": "capacity_confirmation",
+            "value": 65,
+            "confirmed_at_minutes": 720,
+            "valid_until_minutes": 2880,
+            "revision": 2,
+            "basis": "assumed",
+            "source": "synthetic observed report"
+          },
+          {
+            "minute": 720,
+            "kind": "maintenance",
+            "maintenance_complete": true
+          },
+          {
+            "minute": 720,
+            "kind": "production_confirmation",
+            "firm": "B",
+            "record": {
+              "owner": "production_owner_B",
+              "restart_ready": true,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 1
+            }
+          }
+        ],
+        "assumptions": [
+          "合成工程演练；公开资料仅支持问题和约束类别，所有数值均非现场校准。",
+          "四家持续产水48小时；同一混合设备画像、共同通知额度和恢复保障。",
+          "水类标签仅代表假设接纳约定；不证明化学相容、去除效率或达标排放。",
+          "仅一种固定暂存池和一台共享转移泵；新增资源不等于调度算法增益。",
+          "未来扰动留在私有场景中；控制器只看当前公开观测和已知产水计划。",
+          "接收量不是达标处理量；暂存、回送在途和剩余库存始终计入责任。",
+          "Only firm B may request production deferral under dated synthetic owner authority.",
+          "Deferred manufacturing remains unmet output; tail and restart cleaning add physical water. No monetary or water-saving claim."
+        ],
+        "substep_minutes": 5,
+        "auto_ack": true,
+        "capabilities": {
+          "A": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "on_off",
+            "duty_rate": 20,
+            "flow_levels": [
+              0,
+              20
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "B": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30,
+              40
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          },
+          "C": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "window",
+            "duty_rate": 15,
+            "flow_levels": [
+              0,
+              15
+            ],
+            "windows_minutes": [
+              [
+                0,
+                360
+              ],
+              [
+                420,
+                1800
+              ],
+              [
+                1860,
+                2880
+              ]
+            ],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "D": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          }
+        },
+        "notice_budget": {
+          "limit": 32,
+          "window_minutes": 1440
+        },
+        "restart_guard": {
+          "enabled": true
+        },
+        "recovery": {
+          "maintenance_complete": false,
+          "temporary_supply_available": false,
+          "process_ready": null,
+          "effluent_verified": null,
+          "capacity_confirmation": {
+            "value": 65,
+            "confirmed_at_minutes": 0,
+            "valid_until_minutes": 2880,
+            "revision": 0,
+            "basis": "assumed",
+            "source": "synthetic receiving acceptance; not actual plant approval"
+          }
+        },
+        "maintenance_plan": {
+          "expected_restore_minutes": 480,
+          "announced_at_minutes": 0,
+          "revision": 0,
+          "basis": "assumed",
+          "source": "synthetic initial maintenance ETA; not receiving confirmation"
+        },
+        "disposition": {
+          "enabled": true,
+          "storage_capacity_m3": 120,
+          "pump_rate_m3_h": 20,
+          "travel_minutes": 30,
+          "ack_delay_minutes": 30,
+          "setup_minutes": 15,
+          "return_route": "R1",
+          "firm_types": {
+            "A": "pretreated_process",
+            "B": "pretreated_process",
+            "C": "pretreated_process",
+            "D": "saline_stream"
+          },
+          "acceptance": {
+            "storage": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            },
+            "plant": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process",
+                "saline_stream"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            }
+          },
+          "initial_inventory": {}
+        },
+        "production_control": {
+          "profiles": {
+            "B": {
+              "basis": "assumed",
+              "source": "v6 predeclared synthetic production profile; not field calibrated",
+              "owner": "production_owner_B",
+              "authorized": true,
+              "authorized_until_minutes": 2880,
+              "authority_revision": 0,
+              "ack_minutes": 90,
+              "stop_lead_minutes": 30,
+              "restart_lead_minutes": 90,
+              "batch_minutes": 120,
+              "min_pause_minutes": 60,
+              "residual_minutes": 120,
+              "residual_rate_m3_h": 4.0625,
+              "restart_flush_m3": 4,
+              "planned_units_per_hour": 100,
+              "restart_ready": false,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_id": "maintenance_delay",
+      "variant": "unknown_tail",
+      "configuration": {
+        "name": "检修延期",
+        "firms": {
+          "A": {
+            "id": "A",
+            "name": "甲 · 精细加工",
+            "route": "R1",
+            "stock": 60,
+            "capacity": 90,
+            "production_rate": 13.0,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "B": {
+            "id": "B",
+            "name": "乙 · 批次生产",
+            "route": "R1",
+            "stock": 65,
+            "capacity": 100,
+            "production_rate": 16.25,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 3,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "C": {
+            "id": "C",
+            "name": "丙 · 材料清洗",
+            "route": "R2",
+            "stock": 45,
+            "capacity": 85,
+            "production_rate": 9.75,
+            "rate": 15,
+            "max_rate": 35,
+            "ack_delay": 2,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "D": {
+            "id": "D",
+            "name": "丁 · 表面处理",
+            "route": "R2",
+            "stock": 50,
+            "capacity": 75,
+            "production_rate": 6.5,
+            "rate": 10,
+            "max_rate": 30,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "routes": {
+          "R1": {
+            "id": "R1",
+            "name": "专线一",
+            "capacity": 60.0,
+            "buffer": 98.0,
+            "stock": 24.5,
+            "delay": 2,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          },
+          "R2": {
+            "id": "R2",
+            "name": "专线二",
+            "capacity": 45.0,
+            "buffer": 84.0,
+            "stock": 20.0,
+            "delay": 4,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "downstream_capacity": 65.0,
+        "end_tick": 192,
+        "production_end": 192,
+        "start_hour": 8,
+        "step_minutes": 15,
+        "disturbances": [
+          {
+            "minute": 120,
+            "kind": "capacity",
+            "value": 25
+          },
+          {
+            "minute": 120,
+            "kind": "capacity_confirmation",
+            "value": 25,
+            "confirmed_at_minutes": 120,
+            "valid_until_minutes": 2880,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic observed report"
+          },
+          {
+            "minute": 360,
+            "kind": "maintenance_notice",
+            "expected_restore_minutes": 720,
+            "announced_at_minutes": 360,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic announced repair delay; receiving confirmation remains separate"
+          },
+          {
+            "minute": 720,
+            "kind": "capacity",
+            "value": 65
+          },
+          {
+            "minute": 720,
+            "kind": "capacity_confirmation",
+            "value": 65,
+            "confirmed_at_minutes": 720,
+            "valid_until_minutes": 2880,
+            "revision": 2,
+            "basis": "assumed",
+            "source": "synthetic observed report"
+          },
+          {
+            "minute": 720,
+            "kind": "maintenance",
+            "maintenance_complete": true
+          },
+          {
+            "minute": 720,
+            "kind": "production_confirmation",
+            "firm": "B",
+            "record": {
+              "owner": "production_owner_B",
+              "restart_ready": true,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 1
+            }
+          }
+        ],
+        "assumptions": [
+          "合成工程演练；公开资料仅支持问题和约束类别，所有数值均非现场校准。",
+          "四家持续产水48小时；同一混合设备画像、共同通知额度和恢复保障。",
+          "水类标签仅代表假设接纳约定；不证明化学相容、去除效率或达标排放。",
+          "仅一种固定暂存池和一台共享转移泵；新增资源不等于调度算法增益。",
+          "未来扰动留在私有场景中；控制器只看当前公开观测和已知产水计划。",
+          "接收量不是达标处理量；暂存、回送在途和剩余库存始终计入责任。",
+          "Only firm B may request production deferral under dated synthetic owner authority.",
+          "Deferred manufacturing remains unmet output; tail and restart cleaning add physical water. No monetary or water-saving claim."
+        ],
+        "substep_minutes": 5,
+        "auto_ack": true,
+        "capabilities": {
+          "A": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "on_off",
+            "duty_rate": 20,
+            "flow_levels": [
+              0,
+              20
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "B": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30,
+              40
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          },
+          "C": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "window",
+            "duty_rate": 15,
+            "flow_levels": [
+              0,
+              15
+            ],
+            "windows_minutes": [
+              [
+                0,
+                360
+              ],
+              [
+                420,
+                1800
+              ],
+              [
+                1860,
+                2880
+              ]
+            ],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "D": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          }
+        },
+        "notice_budget": {
+          "limit": 32,
+          "window_minutes": 1440
+        },
+        "restart_guard": {
+          "enabled": true
+        },
+        "recovery": {
+          "maintenance_complete": false,
+          "temporary_supply_available": false,
+          "process_ready": null,
+          "effluent_verified": null,
+          "capacity_confirmation": {
+            "value": 65,
+            "confirmed_at_minutes": 0,
+            "valid_until_minutes": 2880,
+            "revision": 0,
+            "basis": "assumed",
+            "source": "synthetic receiving acceptance; not actual plant approval"
+          }
+        },
+        "maintenance_plan": {
+          "expected_restore_minutes": 480,
+          "announced_at_minutes": 0,
+          "revision": 0,
+          "basis": "assumed",
+          "source": "synthetic initial maintenance ETA; not receiving confirmation"
+        },
+        "disposition": {
+          "enabled": true,
+          "storage_capacity_m3": 120,
+          "pump_rate_m3_h": 20,
+          "travel_minutes": 30,
+          "ack_delay_minutes": 30,
+          "setup_minutes": 15,
+          "return_route": "R1",
+          "firm_types": {
+            "A": "pretreated_process",
+            "B": "pretreated_process",
+            "C": "pretreated_process",
+            "D": "saline_stream"
+          },
+          "acceptance": {
+            "storage": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            },
+            "plant": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process",
+                "saline_stream"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            }
+          },
+          "initial_inventory": {}
+        },
+        "production_control": {
+          "profiles": {
+            "B": {
+              "basis": "assumed",
+              "source": "v6 predeclared synthetic production profile; not field calibrated",
+              "owner": "production_owner_B",
+              "authorized": true,
+              "authorized_until_minutes": 2880,
+              "authority_revision": 0,
+              "ack_minutes": 30,
+              "stop_lead_minutes": 30,
+              "restart_lead_minutes": 45,
+              "batch_minutes": 120,
+              "min_pause_minutes": 60,
+              "residual_minutes": null,
+              "residual_rate_m3_h": null,
+              "restart_flush_m3": 4,
+              "planned_units_per_hour": 100,
+              "restart_ready": false,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_id": "confirmation_gap",
+      "variant": "base",
+      "configuration": {
+        "name": "确认撤回",
+        "firms": {
+          "A": {
+            "id": "A",
+            "name": "甲 · 精细加工",
+            "route": "R1",
+            "stock": 60,
+            "capacity": 90,
+            "production_rate": 13.0,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "B": {
+            "id": "B",
+            "name": "乙 · 批次生产",
+            "route": "R1",
+            "stock": 65,
+            "capacity": 100,
+            "production_rate": 16.25,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 3,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "C": {
+            "id": "C",
+            "name": "丙 · 材料清洗",
+            "route": "R2",
+            "stock": 45,
+            "capacity": 85,
+            "production_rate": 9.75,
+            "rate": 15,
+            "max_rate": 35,
+            "ack_delay": 2,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "D": {
+            "id": "D",
+            "name": "丁 · 表面处理",
+            "route": "R2",
+            "stock": 50,
+            "capacity": 75,
+            "production_rate": 6.5,
+            "rate": 10,
+            "max_rate": 30,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "routes": {
+          "R1": {
+            "id": "R1",
+            "name": "专线一",
+            "capacity": 60.0,
+            "buffer": 98.0,
+            "stock": 24.5,
+            "delay": 2,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          },
+          "R2": {
+            "id": "R2",
+            "name": "专线二",
+            "capacity": 45.0,
+            "buffer": 84.0,
+            "stock": 20.0,
+            "delay": 4,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "downstream_capacity": 65.0,
+        "end_tick": 192,
+        "production_end": 192,
+        "start_hour": 8,
+        "step_minutes": 15,
+        "disturbances": [
+          {
+            "minute": 120,
+            "kind": "capacity",
+            "value": 25
+          },
+          {
+            "minute": 120,
+            "kind": "capacity_confirmation",
+            "value": 25,
+            "confirmed_at_minutes": 120,
+            "valid_until_minutes": 2880,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic observed report"
+          },
+          {
+            "minute": 240,
+            "kind": "acceptance",
+            "destination": "storage",
+            "known": false,
+            "valid_for_minutes": 480
+          },
+          {
+            "minute": 240,
+            "kind": "production_confirmation",
+            "firm": "B",
+            "record": {
+              "owner": "production_owner_B",
+              "authorized": false,
+              "authorized_until_minutes": 2880,
+              "authority_revision": 1
+            }
+          },
+          {
+            "minute": 360,
+            "kind": "maintenance_notice",
+            "expected_restore_minutes": 900,
+            "announced_at_minutes": 360,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic announced repair delay; receiving confirmation remains separate"
+          },
+          {
+            "minute": 360,
+            "kind": "acceptance",
+            "destination": "storage",
+            "known": true,
+            "valid_for_minutes": 300,
+            "allowed_types": [
+              "pretreated_process"
+            ]
+          },
+          {
+            "minute": 540,
+            "kind": "production_confirmation",
+            "firm": "B",
+            "record": {
+              "owner": "production_owner_B",
+              "authorized": true,
+              "authorized_until_minutes": 2880,
+              "authority_revision": 2
+            }
+          },
+          {
+            "minute": 900,
+            "kind": "capacity",
+            "value": 65
+          },
+          {
+            "minute": 900,
+            "kind": "capacity_confirmation",
+            "value": 65,
+            "confirmed_at_minutes": 900,
+            "valid_until_minutes": 2880,
+            "revision": 2,
+            "basis": "assumed",
+            "source": "synthetic observed report"
+          },
+          {
+            "minute": 900,
+            "kind": "maintenance",
+            "maintenance_complete": true
+          },
+          {
+            "minute": 900,
+            "kind": "acceptance",
+            "destination": "storage",
+            "known": true,
+            "valid_for_minutes": 1980,
+            "allowed_types": [
+              "pretreated_process"
+            ]
+          },
+          {
+            "minute": 900,
+            "kind": "production_confirmation",
+            "firm": "B",
+            "record": {
+              "owner": "production_owner_B",
+              "restart_ready": true,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 1
+            }
+          }
+        ],
+        "assumptions": [
+          "合成工程演练；公开资料仅支持问题和约束类别，所有数值均非现场校准。",
+          "四家持续产水48小时；同一混合设备画像、共同通知额度和恢复保障。",
+          "水类标签仅代表假设接纳约定；不证明化学相容、去除效率或达标排放。",
+          "仅一种固定暂存池和一台共享转移泵；新增资源不等于调度算法增益。",
+          "未来扰动留在私有场景中；控制器只看当前公开观测和已知产水计划。",
+          "接收量不是达标处理量；暂存、回送在途和剩余库存始终计入责任。",
+          "Only firm B may request production deferral under dated synthetic owner authority.",
+          "Deferred manufacturing remains unmet output; tail and restart cleaning add physical water. No monetary or water-saving claim."
+        ],
+        "substep_minutes": 5,
+        "auto_ack": true,
+        "capabilities": {
+          "A": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "on_off",
+            "duty_rate": 20,
+            "flow_levels": [
+              0,
+              20
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "B": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30,
+              40
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          },
+          "C": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "window",
+            "duty_rate": 15,
+            "flow_levels": [
+              0,
+              15
+            ],
+            "windows_minutes": [
+              [
+                0,
+                360
+              ],
+              [
+                420,
+                1800
+              ],
+              [
+                1860,
+                2880
+              ]
+            ],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "D": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          }
+        },
+        "notice_budget": {
+          "limit": 32,
+          "window_minutes": 1440
+        },
+        "restart_guard": {
+          "enabled": true
+        },
+        "recovery": {
+          "maintenance_complete": false,
+          "temporary_supply_available": false,
+          "process_ready": null,
+          "effluent_verified": null,
+          "capacity_confirmation": {
+            "value": 65,
+            "confirmed_at_minutes": 0,
+            "valid_until_minutes": 2880,
+            "revision": 0,
+            "basis": "assumed",
+            "source": "synthetic receiving acceptance; not actual plant approval"
+          }
+        },
+        "maintenance_plan": {
+          "expected_restore_minutes": 480,
+          "announced_at_minutes": 0,
+          "revision": 0,
+          "basis": "assumed",
+          "source": "synthetic initial maintenance ETA; not receiving confirmation"
+        },
+        "disposition": {
+          "enabled": true,
+          "storage_capacity_m3": 120,
+          "pump_rate_m3_h": 20,
+          "travel_minutes": 30,
+          "ack_delay_minutes": 30,
+          "setup_minutes": 15,
+          "return_route": "R1",
+          "firm_types": {
+            "A": "pretreated_process",
+            "B": "pretreated_process",
+            "C": "pretreated_process",
+            "D": "saline_stream"
+          },
+          "acceptance": {
+            "storage": {
+              "known": false,
+              "allowed_types": [
+                "pretreated_process"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            },
+            "plant": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process",
+                "saline_stream"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            }
+          },
+          "initial_inventory": {}
+        },
+        "production_control": {
+          "profiles": {
+            "B": {
+              "basis": "assumed",
+              "source": "v6 predeclared synthetic production profile; not field calibrated",
+              "owner": "production_owner_B",
+              "authorized": true,
+              "authorized_until_minutes": 2880,
+              "authority_revision": 0,
+              "ack_minutes": 30,
+              "stop_lead_minutes": 30,
+              "restart_lead_minutes": 45,
+              "batch_minutes": 120,
+              "min_pause_minutes": 60,
+              "residual_minutes": 60,
+              "residual_rate_m3_h": 4.0625,
+              "restart_flush_m3": 4,
+              "planned_units_per_hour": 100,
+              "restart_ready": false,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_id": "confirmation_gap",
+      "variant": "slow_response",
+      "configuration": {
+        "name": "确认撤回",
+        "firms": {
+          "A": {
+            "id": "A",
+            "name": "甲 · 精细加工",
+            "route": "R1",
+            "stock": 60,
+            "capacity": 90,
+            "production_rate": 13.0,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "B": {
+            "id": "B",
+            "name": "乙 · 批次生产",
+            "route": "R1",
+            "stock": 65,
+            "capacity": 100,
+            "production_rate": 16.25,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 3,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "C": {
+            "id": "C",
+            "name": "丙 · 材料清洗",
+            "route": "R2",
+            "stock": 45,
+            "capacity": 85,
+            "production_rate": 9.75,
+            "rate": 15,
+            "max_rate": 35,
+            "ack_delay": 2,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "D": {
+            "id": "D",
+            "name": "丁 · 表面处理",
+            "route": "R2",
+            "stock": 50,
+            "capacity": 75,
+            "production_rate": 6.5,
+            "rate": 10,
+            "max_rate": 30,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "routes": {
+          "R1": {
+            "id": "R1",
+            "name": "专线一",
+            "capacity": 60.0,
+            "buffer": 98.0,
+            "stock": 24.5,
+            "delay": 2,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          },
+          "R2": {
+            "id": "R2",
+            "name": "专线二",
+            "capacity": 45.0,
+            "buffer": 84.0,
+            "stock": 20.0,
+            "delay": 4,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "downstream_capacity": 65.0,
+        "end_tick": 192,
+        "production_end": 192,
+        "start_hour": 8,
+        "step_minutes": 15,
+        "disturbances": [
+          {
+            "minute": 120,
+            "kind": "capacity",
+            "value": 25
+          },
+          {
+            "minute": 120,
+            "kind": "capacity_confirmation",
+            "value": 25,
+            "confirmed_at_minutes": 120,
+            "valid_until_minutes": 2880,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic observed report"
+          },
+          {
+            "minute": 240,
+            "kind": "acceptance",
+            "destination": "storage",
+            "known": false,
+            "valid_for_minutes": 480
+          },
+          {
+            "minute": 240,
+            "kind": "production_confirmation",
+            "firm": "B",
+            "record": {
+              "owner": "production_owner_B",
+              "authorized": false,
+              "authorized_until_minutes": 2880,
+              "authority_revision": 1
+            }
+          },
+          {
+            "minute": 360,
+            "kind": "maintenance_notice",
+            "expected_restore_minutes": 900,
+            "announced_at_minutes": 360,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic announced repair delay; receiving confirmation remains separate"
+          },
+          {
+            "minute": 360,
+            "kind": "acceptance",
+            "destination": "storage",
+            "known": true,
+            "valid_for_minutes": 300,
+            "allowed_types": [
+              "pretreated_process"
+            ]
+          },
+          {
+            "minute": 540,
+            "kind": "production_confirmation",
+            "firm": "B",
+            "record": {
+              "owner": "production_owner_B",
+              "authorized": true,
+              "authorized_until_minutes": 2880,
+              "authority_revision": 2
+            }
+          },
+          {
+            "minute": 900,
+            "kind": "capacity",
+            "value": 65
+          },
+          {
+            "minute": 900,
+            "kind": "capacity_confirmation",
+            "value": 65,
+            "confirmed_at_minutes": 900,
+            "valid_until_minutes": 2880,
+            "revision": 2,
+            "basis": "assumed",
+            "source": "synthetic observed report"
+          },
+          {
+            "minute": 900,
+            "kind": "maintenance",
+            "maintenance_complete": true
+          },
+          {
+            "minute": 900,
+            "kind": "acceptance",
+            "destination": "storage",
+            "known": true,
+            "valid_for_minutes": 1980,
+            "allowed_types": [
+              "pretreated_process"
+            ]
+          },
+          {
+            "minute": 900,
+            "kind": "production_confirmation",
+            "firm": "B",
+            "record": {
+              "owner": "production_owner_B",
+              "restart_ready": true,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 1
+            }
+          }
+        ],
+        "assumptions": [
+          "合成工程演练；公开资料仅支持问题和约束类别，所有数值均非现场校准。",
+          "四家持续产水48小时；同一混合设备画像、共同通知额度和恢复保障。",
+          "水类标签仅代表假设接纳约定；不证明化学相容、去除效率或达标排放。",
+          "仅一种固定暂存池和一台共享转移泵；新增资源不等于调度算法增益。",
+          "未来扰动留在私有场景中；控制器只看当前公开观测和已知产水计划。",
+          "接收量不是达标处理量；暂存、回送在途和剩余库存始终计入责任。",
+          "Only firm B may request production deferral under dated synthetic owner authority.",
+          "Deferred manufacturing remains unmet output; tail and restart cleaning add physical water. No monetary or water-saving claim."
+        ],
+        "substep_minutes": 5,
+        "auto_ack": true,
+        "capabilities": {
+          "A": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "on_off",
+            "duty_rate": 20,
+            "flow_levels": [
+              0,
+              20
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "B": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30,
+              40
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          },
+          "C": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "window",
+            "duty_rate": 15,
+            "flow_levels": [
+              0,
+              15
+            ],
+            "windows_minutes": [
+              [
+                0,
+                360
+              ],
+              [
+                420,
+                1800
+              ],
+              [
+                1860,
+                2880
+              ]
+            ],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "D": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          }
+        },
+        "notice_budget": {
+          "limit": 32,
+          "window_minutes": 1440
+        },
+        "restart_guard": {
+          "enabled": true
+        },
+        "recovery": {
+          "maintenance_complete": false,
+          "temporary_supply_available": false,
+          "process_ready": null,
+          "effluent_verified": null,
+          "capacity_confirmation": {
+            "value": 65,
+            "confirmed_at_minutes": 0,
+            "valid_until_minutes": 2880,
+            "revision": 0,
+            "basis": "assumed",
+            "source": "synthetic receiving acceptance; not actual plant approval"
+          }
+        },
+        "maintenance_plan": {
+          "expected_restore_minutes": 480,
+          "announced_at_minutes": 0,
+          "revision": 0,
+          "basis": "assumed",
+          "source": "synthetic initial maintenance ETA; not receiving confirmation"
+        },
+        "disposition": {
+          "enabled": true,
+          "storage_capacity_m3": 120,
+          "pump_rate_m3_h": 20,
+          "travel_minutes": 30,
+          "ack_delay_minutes": 30,
+          "setup_minutes": 15,
+          "return_route": "R1",
+          "firm_types": {
+            "A": "pretreated_process",
+            "B": "pretreated_process",
+            "C": "pretreated_process",
+            "D": "saline_stream"
+          },
+          "acceptance": {
+            "storage": {
+              "known": false,
+              "allowed_types": [
+                "pretreated_process"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            },
+            "plant": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process",
+                "saline_stream"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            }
+          },
+          "initial_inventory": {}
+        },
+        "production_control": {
+          "profiles": {
+            "B": {
+              "basis": "assumed",
+              "source": "v6 predeclared synthetic production profile; not field calibrated",
+              "owner": "production_owner_B",
+              "authorized": true,
+              "authorized_until_minutes": 2880,
+              "authority_revision": 0,
+              "ack_minutes": 90,
+              "stop_lead_minutes": 30,
+              "restart_lead_minutes": 90,
+              "batch_minutes": 120,
+              "min_pause_minutes": 60,
+              "residual_minutes": 120,
+              "residual_rate_m3_h": 4.0625,
+              "restart_flush_m3": 4,
+              "planned_units_per_hour": 100,
+              "restart_ready": false,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_id": "confirmation_gap",
+      "variant": "unknown_tail",
+      "configuration": {
+        "name": "确认撤回",
+        "firms": {
+          "A": {
+            "id": "A",
+            "name": "甲 · 精细加工",
+            "route": "R1",
+            "stock": 60,
+            "capacity": 90,
+            "production_rate": 13.0,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "B": {
+            "id": "B",
+            "name": "乙 · 批次生产",
+            "route": "R1",
+            "stock": 65,
+            "capacity": 100,
+            "production_rate": 16.25,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 3,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "C": {
+            "id": "C",
+            "name": "丙 · 材料清洗",
+            "route": "R2",
+            "stock": 45,
+            "capacity": 85,
+            "production_rate": 9.75,
+            "rate": 15,
+            "max_rate": 35,
+            "ack_delay": 2,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "D": {
+            "id": "D",
+            "name": "丁 · 表面处理",
+            "route": "R2",
+            "stock": 50,
+            "capacity": 75,
+            "production_rate": 6.5,
+            "rate": 10,
+            "max_rate": 30,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "routes": {
+          "R1": {
+            "id": "R1",
+            "name": "专线一",
+            "capacity": 60.0,
+            "buffer": 98.0,
+            "stock": 24.5,
+            "delay": 2,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          },
+          "R2": {
+            "id": "R2",
+            "name": "专线二",
+            "capacity": 45.0,
+            "buffer": 84.0,
+            "stock": 20.0,
+            "delay": 4,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "downstream_capacity": 65.0,
+        "end_tick": 192,
+        "production_end": 192,
+        "start_hour": 8,
+        "step_minutes": 15,
+        "disturbances": [
+          {
+            "minute": 120,
+            "kind": "capacity",
+            "value": 25
+          },
+          {
+            "minute": 120,
+            "kind": "capacity_confirmation",
+            "value": 25,
+            "confirmed_at_minutes": 120,
+            "valid_until_minutes": 2880,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic observed report"
+          },
+          {
+            "minute": 240,
+            "kind": "acceptance",
+            "destination": "storage",
+            "known": false,
+            "valid_for_minutes": 480
+          },
+          {
+            "minute": 240,
+            "kind": "production_confirmation",
+            "firm": "B",
+            "record": {
+              "owner": "production_owner_B",
+              "authorized": false,
+              "authorized_until_minutes": 2880,
+              "authority_revision": 1
+            }
+          },
+          {
+            "minute": 360,
+            "kind": "maintenance_notice",
+            "expected_restore_minutes": 900,
+            "announced_at_minutes": 360,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic announced repair delay; receiving confirmation remains separate"
+          },
+          {
+            "minute": 360,
+            "kind": "acceptance",
+            "destination": "storage",
+            "known": true,
+            "valid_for_minutes": 300,
+            "allowed_types": [
+              "pretreated_process"
+            ]
+          },
+          {
+            "minute": 540,
+            "kind": "production_confirmation",
+            "firm": "B",
+            "record": {
+              "owner": "production_owner_B",
+              "authorized": true,
+              "authorized_until_minutes": 2880,
+              "authority_revision": 2
+            }
+          },
+          {
+            "minute": 900,
+            "kind": "capacity",
+            "value": 65
+          },
+          {
+            "minute": 900,
+            "kind": "capacity_confirmation",
+            "value": 65,
+            "confirmed_at_minutes": 900,
+            "valid_until_minutes": 2880,
+            "revision": 2,
+            "basis": "assumed",
+            "source": "synthetic observed report"
+          },
+          {
+            "minute": 900,
+            "kind": "maintenance",
+            "maintenance_complete": true
+          },
+          {
+            "minute": 900,
+            "kind": "acceptance",
+            "destination": "storage",
+            "known": true,
+            "valid_for_minutes": 1980,
+            "allowed_types": [
+              "pretreated_process"
+            ]
+          },
+          {
+            "minute": 900,
+            "kind": "production_confirmation",
+            "firm": "B",
+            "record": {
+              "owner": "production_owner_B",
+              "restart_ready": true,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 1
+            }
+          }
+        ],
+        "assumptions": [
+          "合成工程演练；公开资料仅支持问题和约束类别，所有数值均非现场校准。",
+          "四家持续产水48小时；同一混合设备画像、共同通知额度和恢复保障。",
+          "水类标签仅代表假设接纳约定；不证明化学相容、去除效率或达标排放。",
+          "仅一种固定暂存池和一台共享转移泵；新增资源不等于调度算法增益。",
+          "未来扰动留在私有场景中；控制器只看当前公开观测和已知产水计划。",
+          "接收量不是达标处理量；暂存、回送在途和剩余库存始终计入责任。",
+          "Only firm B may request production deferral under dated synthetic owner authority.",
+          "Deferred manufacturing remains unmet output; tail and restart cleaning add physical water. No monetary or water-saving claim."
+        ],
+        "substep_minutes": 5,
+        "auto_ack": true,
+        "capabilities": {
+          "A": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "on_off",
+            "duty_rate": 20,
+            "flow_levels": [
+              0,
+              20
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "B": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30,
+              40
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          },
+          "C": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "window",
+            "duty_rate": 15,
+            "flow_levels": [
+              0,
+              15
+            ],
+            "windows_minutes": [
+              [
+                0,
+                360
+              ],
+              [
+                420,
+                1800
+              ],
+              [
+                1860,
+                2880
+              ]
+            ],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "D": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          }
+        },
+        "notice_budget": {
+          "limit": 32,
+          "window_minutes": 1440
+        },
+        "restart_guard": {
+          "enabled": true
+        },
+        "recovery": {
+          "maintenance_complete": false,
+          "temporary_supply_available": false,
+          "process_ready": null,
+          "effluent_verified": null,
+          "capacity_confirmation": {
+            "value": 65,
+            "confirmed_at_minutes": 0,
+            "valid_until_minutes": 2880,
+            "revision": 0,
+            "basis": "assumed",
+            "source": "synthetic receiving acceptance; not actual plant approval"
+          }
+        },
+        "maintenance_plan": {
+          "expected_restore_minutes": 480,
+          "announced_at_minutes": 0,
+          "revision": 0,
+          "basis": "assumed",
+          "source": "synthetic initial maintenance ETA; not receiving confirmation"
+        },
+        "disposition": {
+          "enabled": true,
+          "storage_capacity_m3": 120,
+          "pump_rate_m3_h": 20,
+          "travel_minutes": 30,
+          "ack_delay_minutes": 30,
+          "setup_minutes": 15,
+          "return_route": "R1",
+          "firm_types": {
+            "A": "pretreated_process",
+            "B": "pretreated_process",
+            "C": "pretreated_process",
+            "D": "saline_stream"
+          },
+          "acceptance": {
+            "storage": {
+              "known": false,
+              "allowed_types": [
+                "pretreated_process"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            },
+            "plant": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process",
+                "saline_stream"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            }
+          },
+          "initial_inventory": {}
+        },
+        "production_control": {
+          "profiles": {
+            "B": {
+              "basis": "assumed",
+              "source": "v6 predeclared synthetic production profile; not field calibrated",
+              "owner": "production_owner_B",
+              "authorized": true,
+              "authorized_until_minutes": 2880,
+              "authority_revision": 0,
+              "ack_minutes": 30,
+              "stop_lead_minutes": 30,
+              "restart_lead_minutes": 45,
+              "batch_minutes": 120,
+              "min_pause_minutes": 60,
+              "residual_minutes": null,
+              "residual_rate_m3_h": null,
+              "restart_flush_m3": 4,
+              "planned_units_per_hour": 100,
+              "restart_ready": false,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_id": "return_overlap",
+      "variant": "base",
+      "configuration": {
+        "name": "回送与生产恢复叠加",
+        "firms": {
+          "A": {
+            "id": "A",
+            "name": "甲 · 精细加工",
+            "route": "R1",
+            "stock": 60,
+            "capacity": 90,
+            "production_rate": 13.0,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "B": {
+            "id": "B",
+            "name": "乙 · 批次生产",
+            "route": "R1",
+            "stock": 65,
+            "capacity": 100,
+            "production_rate": 16.25,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 3,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "C": {
+            "id": "C",
+            "name": "丙 · 材料清洗",
+            "route": "R2",
+            "stock": 45,
+            "capacity": 85,
+            "production_rate": 9.75,
+            "rate": 15,
+            "max_rate": 35,
+            "ack_delay": 2,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "D": {
+            "id": "D",
+            "name": "丁 · 表面处理",
+            "route": "R2",
+            "stock": 50,
+            "capacity": 75,
+            "production_rate": 6.5,
+            "rate": 10,
+            "max_rate": 30,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "routes": {
+          "R1": {
+            "id": "R1",
+            "name": "专线一",
+            "capacity": 60.0,
+            "buffer": 98.0,
+            "stock": 24.5,
+            "delay": 2,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          },
+          "R2": {
+            "id": "R2",
+            "name": "专线二",
+            "capacity": 45.0,
+            "buffer": 84.0,
+            "stock": 20.0,
+            "delay": 4,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "downstream_capacity": 65.0,
+        "end_tick": 192,
+        "production_end": 192,
+        "start_hour": 8,
+        "step_minutes": 15,
+        "disturbances": [
+          {
+            "minute": 120,
+            "kind": "capacity",
+            "value": 25
+          },
+          {
+            "minute": 120,
+            "kind": "capacity_confirmation",
+            "value": 25,
+            "confirmed_at_minutes": 120,
+            "valid_until_minutes": 2880,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic observed report"
+          },
+          {
+            "minute": 360,
+            "kind": "maintenance_notice",
+            "expected_restore_minutes": 720,
+            "announced_at_minutes": 360,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic announced repair delay; receiving confirmation remains separate"
+          },
+          {
+            "minute": 720,
+            "kind": "capacity",
+            "value": 65
+          },
+          {
+            "minute": 720,
+            "kind": "capacity_confirmation",
+            "value": 65,
+            "confirmed_at_minutes": 720,
+            "valid_until_minutes": 2880,
+            "revision": 2,
+            "basis": "assumed",
+            "source": "synthetic observed report"
+          },
+          {
+            "minute": 720,
+            "kind": "maintenance",
+            "maintenance_complete": true
+          },
+          {
+            "minute": 720,
+            "kind": "production_confirmation",
+            "firm": "B",
+            "record": {
+              "owner": "production_owner_B",
+              "restart_ready": true,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 1
+            }
+          },
+          {
+            "minute": 780,
+            "kind": "production",
+            "firm": "A",
+            "value": 1.5
+          },
+          {
+            "minute": 780,
+            "kind": "production",
+            "firm": "B",
+            "value": 1.5
+          },
+          {
+            "minute": 780,
+            "kind": "production",
+            "firm": "C",
+            "value": 1.5
+          },
+          {
+            "minute": 780,
+            "kind": "production",
+            "firm": "D",
+            "value": 1.5
+          },
+          {
+            "minute": 1440,
+            "kind": "production",
+            "firm": "A",
+            "value": 1.0
+          },
+          {
+            "minute": 1440,
+            "kind": "production",
+            "firm": "B",
+            "value": 1.0
+          },
+          {
+            "minute": 1440,
+            "kind": "production",
+            "firm": "C",
+            "value": 1.0
+          },
+          {
+            "minute": 1440,
+            "kind": "production",
+            "firm": "D",
+            "value": 1.0
+          }
+        ],
+        "assumptions": [
+          "合成工程演练；公开资料仅支持问题和约束类别，所有数值均非现场校准。",
+          "四家持续产水48小时；同一混合设备画像、共同通知额度和恢复保障。",
+          "水类标签仅代表假设接纳约定；不证明化学相容、去除效率或达标排放。",
+          "仅一种固定暂存池和一台共享转移泵；新增资源不等于调度算法增益。",
+          "未来扰动留在私有场景中；控制器只看当前公开观测和已知产水计划。",
+          "接收量不是达标处理量；暂存、回送在途和剩余库存始终计入责任。",
+          "Only firm B may request production deferral under dated synthetic owner authority.",
+          "Deferred manufacturing remains unmet output; tail and restart cleaning add physical water. No monetary or water-saving claim."
+        ],
+        "substep_minutes": 5,
+        "auto_ack": true,
+        "capabilities": {
+          "A": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "on_off",
+            "duty_rate": 20,
+            "flow_levels": [
+              0,
+              20
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "B": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30,
+              40
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          },
+          "C": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "window",
+            "duty_rate": 15,
+            "flow_levels": [
+              0,
+              15
+            ],
+            "windows_minutes": [
+              [
+                0,
+                360
+              ],
+              [
+                420,
+                1800
+              ],
+              [
+                1860,
+                2880
+              ]
+            ],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "D": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          }
+        },
+        "notice_budget": {
+          "limit": 32,
+          "window_minutes": 1440
+        },
+        "restart_guard": {
+          "enabled": true
+        },
+        "recovery": {
+          "maintenance_complete": false,
+          "temporary_supply_available": false,
+          "process_ready": null,
+          "effluent_verified": null,
+          "capacity_confirmation": {
+            "value": 65,
+            "confirmed_at_minutes": 0,
+            "valid_until_minutes": 2880,
+            "revision": 0,
+            "basis": "assumed",
+            "source": "synthetic receiving acceptance; not actual plant approval"
+          }
+        },
+        "maintenance_plan": {
+          "expected_restore_minutes": 480,
+          "announced_at_minutes": 0,
+          "revision": 0,
+          "basis": "assumed",
+          "source": "synthetic initial maintenance ETA; not receiving confirmation"
+        },
+        "disposition": {
+          "enabled": true,
+          "storage_capacity_m3": 120,
+          "pump_rate_m3_h": 20,
+          "travel_minutes": 30,
+          "ack_delay_minutes": 30,
+          "setup_minutes": 15,
+          "return_route": "R1",
+          "firm_types": {
+            "A": "pretreated_process",
+            "B": "pretreated_process",
+            "C": "pretreated_process",
+            "D": "saline_stream"
+          },
+          "acceptance": {
+            "storage": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            },
+            "plant": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process",
+                "saline_stream"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            }
+          },
+          "initial_inventory": {}
+        },
+        "production_control": {
+          "profiles": {
+            "B": {
+              "basis": "assumed",
+              "source": "v6 predeclared synthetic production profile; not field calibrated",
+              "owner": "production_owner_B",
+              "authorized": true,
+              "authorized_until_minutes": 2880,
+              "authority_revision": 0,
+              "ack_minutes": 30,
+              "stop_lead_minutes": 30,
+              "restart_lead_minutes": 45,
+              "batch_minutes": 120,
+              "min_pause_minutes": 60,
+              "residual_minutes": 60,
+              "residual_rate_m3_h": 4.0625,
+              "restart_flush_m3": 4,
+              "planned_units_per_hour": 100,
+              "restart_ready": false,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_id": "return_overlap",
+      "variant": "slow_response",
+      "configuration": {
+        "name": "回送与生产恢复叠加",
+        "firms": {
+          "A": {
+            "id": "A",
+            "name": "甲 · 精细加工",
+            "route": "R1",
+            "stock": 60,
+            "capacity": 90,
+            "production_rate": 13.0,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "B": {
+            "id": "B",
+            "name": "乙 · 批次生产",
+            "route": "R1",
+            "stock": 65,
+            "capacity": 100,
+            "production_rate": 16.25,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 3,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "C": {
+            "id": "C",
+            "name": "丙 · 材料清洗",
+            "route": "R2",
+            "stock": 45,
+            "capacity": 85,
+            "production_rate": 9.75,
+            "rate": 15,
+            "max_rate": 35,
+            "ack_delay": 2,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "D": {
+            "id": "D",
+            "name": "丁 · 表面处理",
+            "route": "R2",
+            "stock": 50,
+            "capacity": 75,
+            "production_rate": 6.5,
+            "rate": 10,
+            "max_rate": 30,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "routes": {
+          "R1": {
+            "id": "R1",
+            "name": "专线一",
+            "capacity": 60.0,
+            "buffer": 98.0,
+            "stock": 24.5,
+            "delay": 2,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          },
+          "R2": {
+            "id": "R2",
+            "name": "专线二",
+            "capacity": 45.0,
+            "buffer": 84.0,
+            "stock": 20.0,
+            "delay": 4,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "downstream_capacity": 65.0,
+        "end_tick": 192,
+        "production_end": 192,
+        "start_hour": 8,
+        "step_minutes": 15,
+        "disturbances": [
+          {
+            "minute": 120,
+            "kind": "capacity",
+            "value": 25
+          },
+          {
+            "minute": 120,
+            "kind": "capacity_confirmation",
+            "value": 25,
+            "confirmed_at_minutes": 120,
+            "valid_until_minutes": 2880,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic observed report"
+          },
+          {
+            "minute": 360,
+            "kind": "maintenance_notice",
+            "expected_restore_minutes": 720,
+            "announced_at_minutes": 360,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic announced repair delay; receiving confirmation remains separate"
+          },
+          {
+            "minute": 720,
+            "kind": "capacity",
+            "value": 65
+          },
+          {
+            "minute": 720,
+            "kind": "capacity_confirmation",
+            "value": 65,
+            "confirmed_at_minutes": 720,
+            "valid_until_minutes": 2880,
+            "revision": 2,
+            "basis": "assumed",
+            "source": "synthetic observed report"
+          },
+          {
+            "minute": 720,
+            "kind": "maintenance",
+            "maintenance_complete": true
+          },
+          {
+            "minute": 720,
+            "kind": "production_confirmation",
+            "firm": "B",
+            "record": {
+              "owner": "production_owner_B",
+              "restart_ready": true,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 1
+            }
+          },
+          {
+            "minute": 780,
+            "kind": "production",
+            "firm": "A",
+            "value": 1.5
+          },
+          {
+            "minute": 780,
+            "kind": "production",
+            "firm": "B",
+            "value": 1.5
+          },
+          {
+            "minute": 780,
+            "kind": "production",
+            "firm": "C",
+            "value": 1.5
+          },
+          {
+            "minute": 780,
+            "kind": "production",
+            "firm": "D",
+            "value": 1.5
+          },
+          {
+            "minute": 1440,
+            "kind": "production",
+            "firm": "A",
+            "value": 1.0
+          },
+          {
+            "minute": 1440,
+            "kind": "production",
+            "firm": "B",
+            "value": 1.0
+          },
+          {
+            "minute": 1440,
+            "kind": "production",
+            "firm": "C",
+            "value": 1.0
+          },
+          {
+            "minute": 1440,
+            "kind": "production",
+            "firm": "D",
+            "value": 1.0
+          }
+        ],
+        "assumptions": [
+          "合成工程演练；公开资料仅支持问题和约束类别，所有数值均非现场校准。",
+          "四家持续产水48小时；同一混合设备画像、共同通知额度和恢复保障。",
+          "水类标签仅代表假设接纳约定；不证明化学相容、去除效率或达标排放。",
+          "仅一种固定暂存池和一台共享转移泵；新增资源不等于调度算法增益。",
+          "未来扰动留在私有场景中；控制器只看当前公开观测和已知产水计划。",
+          "接收量不是达标处理量；暂存、回送在途和剩余库存始终计入责任。",
+          "Only firm B may request production deferral under dated synthetic owner authority.",
+          "Deferred manufacturing remains unmet output; tail and restart cleaning add physical water. No monetary or water-saving claim."
+        ],
+        "substep_minutes": 5,
+        "auto_ack": true,
+        "capabilities": {
+          "A": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "on_off",
+            "duty_rate": 20,
+            "flow_levels": [
+              0,
+              20
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "B": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30,
+              40
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          },
+          "C": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "window",
+            "duty_rate": 15,
+            "flow_levels": [
+              0,
+              15
+            ],
+            "windows_minutes": [
+              [
+                0,
+                360
+              ],
+              [
+                420,
+                1800
+              ],
+              [
+                1860,
+                2880
+              ]
+            ],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "D": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          }
+        },
+        "notice_budget": {
+          "limit": 32,
+          "window_minutes": 1440
+        },
+        "restart_guard": {
+          "enabled": true
+        },
+        "recovery": {
+          "maintenance_complete": false,
+          "temporary_supply_available": false,
+          "process_ready": null,
+          "effluent_verified": null,
+          "capacity_confirmation": {
+            "value": 65,
+            "confirmed_at_minutes": 0,
+            "valid_until_minutes": 2880,
+            "revision": 0,
+            "basis": "assumed",
+            "source": "synthetic receiving acceptance; not actual plant approval"
+          }
+        },
+        "maintenance_plan": {
+          "expected_restore_minutes": 480,
+          "announced_at_minutes": 0,
+          "revision": 0,
+          "basis": "assumed",
+          "source": "synthetic initial maintenance ETA; not receiving confirmation"
+        },
+        "disposition": {
+          "enabled": true,
+          "storage_capacity_m3": 120,
+          "pump_rate_m3_h": 20,
+          "travel_minutes": 30,
+          "ack_delay_minutes": 30,
+          "setup_minutes": 15,
+          "return_route": "R1",
+          "firm_types": {
+            "A": "pretreated_process",
+            "B": "pretreated_process",
+            "C": "pretreated_process",
+            "D": "saline_stream"
+          },
+          "acceptance": {
+            "storage": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            },
+            "plant": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process",
+                "saline_stream"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            }
+          },
+          "initial_inventory": {}
+        },
+        "production_control": {
+          "profiles": {
+            "B": {
+              "basis": "assumed",
+              "source": "v6 predeclared synthetic production profile; not field calibrated",
+              "owner": "production_owner_B",
+              "authorized": true,
+              "authorized_until_minutes": 2880,
+              "authority_revision": 0,
+              "ack_minutes": 90,
+              "stop_lead_minutes": 30,
+              "restart_lead_minutes": 90,
+              "batch_minutes": 120,
+              "min_pause_minutes": 60,
+              "residual_minutes": 120,
+              "residual_rate_m3_h": 4.0625,
+              "restart_flush_m3": 4,
+              "planned_units_per_hour": 100,
+              "restart_ready": false,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_id": "return_overlap",
+      "variant": "unknown_tail",
+      "configuration": {
+        "name": "回送与生产恢复叠加",
+        "firms": {
+          "A": {
+            "id": "A",
+            "name": "甲 · 精细加工",
+            "route": "R1",
+            "stock": 60,
+            "capacity": 90,
+            "production_rate": 13.0,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "B": {
+            "id": "B",
+            "name": "乙 · 批次生产",
+            "route": "R1",
+            "stock": 65,
+            "capacity": 100,
+            "production_rate": 16.25,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 3,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "C": {
+            "id": "C",
+            "name": "丙 · 材料清洗",
+            "route": "R2",
+            "stock": 45,
+            "capacity": 85,
+            "production_rate": 9.75,
+            "rate": 15,
+            "max_rate": 35,
+            "ack_delay": 2,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "D": {
+            "id": "D",
+            "name": "丁 · 表面处理",
+            "route": "R2",
+            "stock": 50,
+            "capacity": 75,
+            "production_rate": 6.5,
+            "rate": 10,
+            "max_rate": 30,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "routes": {
+          "R1": {
+            "id": "R1",
+            "name": "专线一",
+            "capacity": 60.0,
+            "buffer": 98.0,
+            "stock": 24.5,
+            "delay": 2,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          },
+          "R2": {
+            "id": "R2",
+            "name": "专线二",
+            "capacity": 45.0,
+            "buffer": 84.0,
+            "stock": 20.0,
+            "delay": 4,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "downstream_capacity": 65.0,
+        "end_tick": 192,
+        "production_end": 192,
+        "start_hour": 8,
+        "step_minutes": 15,
+        "disturbances": [
+          {
+            "minute": 120,
+            "kind": "capacity",
+            "value": 25
+          },
+          {
+            "minute": 120,
+            "kind": "capacity_confirmation",
+            "value": 25,
+            "confirmed_at_minutes": 120,
+            "valid_until_minutes": 2880,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic observed report"
+          },
+          {
+            "minute": 360,
+            "kind": "maintenance_notice",
+            "expected_restore_minutes": 720,
+            "announced_at_minutes": 360,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic announced repair delay; receiving confirmation remains separate"
+          },
+          {
+            "minute": 720,
+            "kind": "capacity",
+            "value": 65
+          },
+          {
+            "minute": 720,
+            "kind": "capacity_confirmation",
+            "value": 65,
+            "confirmed_at_minutes": 720,
+            "valid_until_minutes": 2880,
+            "revision": 2,
+            "basis": "assumed",
+            "source": "synthetic observed report"
+          },
+          {
+            "minute": 720,
+            "kind": "maintenance",
+            "maintenance_complete": true
+          },
+          {
+            "minute": 720,
+            "kind": "production_confirmation",
+            "firm": "B",
+            "record": {
+              "owner": "production_owner_B",
+              "restart_ready": true,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 1
+            }
+          },
+          {
+            "minute": 780,
+            "kind": "production",
+            "firm": "A",
+            "value": 1.5
+          },
+          {
+            "minute": 780,
+            "kind": "production",
+            "firm": "B",
+            "value": 1.5
+          },
+          {
+            "minute": 780,
+            "kind": "production",
+            "firm": "C",
+            "value": 1.5
+          },
+          {
+            "minute": 780,
+            "kind": "production",
+            "firm": "D",
+            "value": 1.5
+          },
+          {
+            "minute": 1440,
+            "kind": "production",
+            "firm": "A",
+            "value": 1.0
+          },
+          {
+            "minute": 1440,
+            "kind": "production",
+            "firm": "B",
+            "value": 1.0
+          },
+          {
+            "minute": 1440,
+            "kind": "production",
+            "firm": "C",
+            "value": 1.0
+          },
+          {
+            "minute": 1440,
+            "kind": "production",
+            "firm": "D",
+            "value": 1.0
+          }
+        ],
+        "assumptions": [
+          "合成工程演练；公开资料仅支持问题和约束类别，所有数值均非现场校准。",
+          "四家持续产水48小时；同一混合设备画像、共同通知额度和恢复保障。",
+          "水类标签仅代表假设接纳约定；不证明化学相容、去除效率或达标排放。",
+          "仅一种固定暂存池和一台共享转移泵；新增资源不等于调度算法增益。",
+          "未来扰动留在私有场景中；控制器只看当前公开观测和已知产水计划。",
+          "接收量不是达标处理量；暂存、回送在途和剩余库存始终计入责任。",
+          "Only firm B may request production deferral under dated synthetic owner authority.",
+          "Deferred manufacturing remains unmet output; tail and restart cleaning add physical water. No monetary or water-saving claim."
+        ],
+        "substep_minutes": 5,
+        "auto_ack": true,
+        "capabilities": {
+          "A": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "on_off",
+            "duty_rate": 20,
+            "flow_levels": [
+              0,
+              20
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "B": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30,
+              40
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          },
+          "C": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "window",
+            "duty_rate": 15,
+            "flow_levels": [
+              0,
+              15
+            ],
+            "windows_minutes": [
+              [
+                0,
+                360
+              ],
+              [
+                420,
+                1800
+              ],
+              [
+                1860,
+                2880
+              ]
+            ],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "D": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          }
+        },
+        "notice_budget": {
+          "limit": 32,
+          "window_minutes": 1440
+        },
+        "restart_guard": {
+          "enabled": true
+        },
+        "recovery": {
+          "maintenance_complete": false,
+          "temporary_supply_available": false,
+          "process_ready": null,
+          "effluent_verified": null,
+          "capacity_confirmation": {
+            "value": 65,
+            "confirmed_at_minutes": 0,
+            "valid_until_minutes": 2880,
+            "revision": 0,
+            "basis": "assumed",
+            "source": "synthetic receiving acceptance; not actual plant approval"
+          }
+        },
+        "maintenance_plan": {
+          "expected_restore_minutes": 480,
+          "announced_at_minutes": 0,
+          "revision": 0,
+          "basis": "assumed",
+          "source": "synthetic initial maintenance ETA; not receiving confirmation"
+        },
+        "disposition": {
+          "enabled": true,
+          "storage_capacity_m3": 120,
+          "pump_rate_m3_h": 20,
+          "travel_minutes": 30,
+          "ack_delay_minutes": 30,
+          "setup_minutes": 15,
+          "return_route": "R1",
+          "firm_types": {
+            "A": "pretreated_process",
+            "B": "pretreated_process",
+            "C": "pretreated_process",
+            "D": "saline_stream"
+          },
+          "acceptance": {
+            "storage": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            },
+            "plant": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process",
+                "saline_stream"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            }
+          },
+          "initial_inventory": {}
+        },
+        "production_control": {
+          "profiles": {
+            "B": {
+              "basis": "assumed",
+              "source": "v6 predeclared synthetic production profile; not field calibrated",
+              "owner": "production_owner_B",
+              "authorized": true,
+              "authorized_until_minutes": 2880,
+              "authority_revision": 0,
+              "ack_minutes": 30,
+              "stop_lead_minutes": 30,
+              "restart_lead_minutes": 45,
+              "batch_minutes": 120,
+              "min_pause_minutes": 60,
+              "residual_minutes": null,
+              "residual_rate_m3_h": null,
+              "restart_flush_m3": 4,
+              "planned_units_per_hour": 100,
+              "restart_ready": false,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_id": "unresolvable",
+      "variant": "base",
+      "configuration": {
+        "name": "声明动作范围内无法容纳",
+        "firms": {
+          "A": {
+            "id": "A",
+            "name": "甲 · 精细加工",
+            "route": "R1",
+            "stock": 60,
+            "capacity": 90,
+            "production_rate": 13.0,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "B": {
+            "id": "B",
+            "name": "乙 · 批次生产",
+            "route": "R1",
+            "stock": 65,
+            "capacity": 100,
+            "production_rate": 16.25,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 3,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "C": {
+            "id": "C",
+            "name": "丙 · 材料清洗",
+            "route": "R2",
+            "stock": 45,
+            "capacity": 85,
+            "production_rate": 9.75,
+            "rate": 15,
+            "max_rate": 35,
+            "ack_delay": 2,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "D": {
+            "id": "D",
+            "name": "丁 · 表面处理",
+            "route": "R2",
+            "stock": 50,
+            "capacity": 75,
+            "production_rate": 6.5,
+            "rate": 10,
+            "max_rate": 30,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "routes": {
+          "R1": {
+            "id": "R1",
+            "name": "专线一",
+            "capacity": 60.0,
+            "buffer": 98.0,
+            "stock": 24.5,
+            "delay": 2,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          },
+          "R2": {
+            "id": "R2",
+            "name": "专线二",
+            "capacity": 45.0,
+            "buffer": 84.0,
+            "stock": 20.0,
+            "delay": 4,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "downstream_capacity": 0,
+        "end_tick": 192,
+        "production_end": 192,
+        "start_hour": 8,
+        "step_minutes": 15,
+        "disturbances": [
+          {
+            "minute": 1440,
+            "kind": "capacity",
+            "value": 65
+          },
+          {
+            "minute": 1440,
+            "kind": "capacity_confirmation",
+            "value": 65,
+            "confirmed_at_minutes": 1440,
+            "valid_until_minutes": 2880,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic capacity restoration"
+          },
+          {
+            "minute": 1440,
+            "kind": "maintenance",
+            "maintenance_complete": true
+          },
+          {
+            "minute": 1440,
+            "kind": "production_confirmation",
+            "firm": "B",
+            "record": {
+              "owner": "production_owner_B",
+              "restart_ready": true,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 1
+            }
+          }
+        ],
+        "assumptions": [
+          "合成工程演练；公开资料仅支持问题和约束类别，所有数值均非现场校准。",
+          "四家持续产水48小时；同一混合设备画像、共同通知额度和恢复保障。",
+          "水类标签仅代表假设接纳约定；不证明化学相容、去除效率或达标排放。",
+          "仅一种固定暂存池和一台共享转移泵；新增资源不等于调度算法增益。",
+          "未来扰动留在私有场景中；控制器只看当前公开观测和已知产水计划。",
+          "接收量不是达标处理量；暂存、回送在途和剩余库存始终计入责任。",
+          "Only firm B may request production deferral under dated synthetic owner authority.",
+          "Deferred manufacturing remains unmet output; tail and restart cleaning add physical water. No monetary or water-saving claim."
+        ],
+        "substep_minutes": 5,
+        "auto_ack": true,
+        "capabilities": {
+          "A": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "on_off",
+            "duty_rate": 20,
+            "flow_levels": [
+              0,
+              20
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "B": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30,
+              40
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          },
+          "C": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "window",
+            "duty_rate": 15,
+            "flow_levels": [
+              0,
+              15
+            ],
+            "windows_minutes": [
+              [
+                0,
+                360
+              ],
+              [
+                420,
+                1800
+              ],
+              [
+                1860,
+                2880
+              ]
+            ],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "D": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          }
+        },
+        "notice_budget": {
+          "limit": 32,
+          "window_minutes": 1440
+        },
+        "restart_guard": {
+          "enabled": true
+        },
+        "recovery": {
+          "maintenance_complete": false,
+          "temporary_supply_available": false,
+          "process_ready": null,
+          "effluent_verified": null,
+          "capacity_confirmation": {
+            "value": 0,
+            "confirmed_at_minutes": 0,
+            "valid_until_minutes": 2880,
+            "revision": 0,
+            "basis": "assumed",
+            "source": "synthetic receiving acceptance; not actual plant approval"
+          }
+        },
+        "maintenance_plan": {
+          "expected_restore_minutes": 1440,
+          "announced_at_minutes": 0,
+          "revision": 0,
+          "basis": "assumed",
+          "source": "synthetic initial maintenance ETA; not receiving confirmation"
+        },
+        "disposition": {
+          "enabled": true,
+          "storage_capacity_m3": 120,
+          "pump_rate_m3_h": 20,
+          "travel_minutes": 30,
+          "ack_delay_minutes": 30,
+          "setup_minutes": 15,
+          "return_route": "R1",
+          "firm_types": {
+            "A": "pretreated_process",
+            "B": "pretreated_process",
+            "C": "pretreated_process",
+            "D": "saline_stream"
+          },
+          "acceptance": {
+            "storage": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            },
+            "plant": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process",
+                "saline_stream"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            }
+          },
+          "initial_inventory": {}
+        },
+        "production_control": {
+          "profiles": {
+            "B": {
+              "basis": "assumed",
+              "source": "v6 predeclared synthetic production profile; not field calibrated",
+              "owner": "production_owner_B",
+              "authorized": true,
+              "authorized_until_minutes": 2880,
+              "authority_revision": 0,
+              "ack_minutes": 30,
+              "stop_lead_minutes": 30,
+              "restart_lead_minutes": 45,
+              "batch_minutes": 120,
+              "min_pause_minutes": 60,
+              "residual_minutes": 60,
+              "residual_rate_m3_h": 4.0625,
+              "restart_flush_m3": 4,
+              "planned_units_per_hour": 100,
+              "restart_ready": false,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 0
+            }
+          }
+        },
+        "receiving_ceiling": {
+          "value": 0,
+          "valid_until_minutes": 1440,
+          "basis": "assumed",
+          "source": "declared no-receiving task constraint; not an ETA inference"
+        },
+        "production_floor": {
+          "rates_m3_h": {
+            "A": 13.0,
+            "C": 9.75,
+            "D": 6.5
+          },
+          "valid_until_minutes": 1440,
+          "basis": "assumed",
+          "source": "declared non-adjustable production floor for bounded infeasibility task"
+        }
+      }
+    },
+    {
+      "case_id": "unresolvable",
+      "variant": "slow_response",
+      "configuration": {
+        "name": "声明动作范围内无法容纳",
+        "firms": {
+          "A": {
+            "id": "A",
+            "name": "甲 · 精细加工",
+            "route": "R1",
+            "stock": 60,
+            "capacity": 90,
+            "production_rate": 13.0,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "B": {
+            "id": "B",
+            "name": "乙 · 批次生产",
+            "route": "R1",
+            "stock": 65,
+            "capacity": 100,
+            "production_rate": 16.25,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 3,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "C": {
+            "id": "C",
+            "name": "丙 · 材料清洗",
+            "route": "R2",
+            "stock": 45,
+            "capacity": 85,
+            "production_rate": 9.75,
+            "rate": 15,
+            "max_rate": 35,
+            "ack_delay": 2,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "D": {
+            "id": "D",
+            "name": "丁 · 表面处理",
+            "route": "R2",
+            "stock": 50,
+            "capacity": 75,
+            "production_rate": 6.5,
+            "rate": 10,
+            "max_rate": 30,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "routes": {
+          "R1": {
+            "id": "R1",
+            "name": "专线一",
+            "capacity": 60.0,
+            "buffer": 98.0,
+            "stock": 24.5,
+            "delay": 2,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          },
+          "R2": {
+            "id": "R2",
+            "name": "专线二",
+            "capacity": 45.0,
+            "buffer": 84.0,
+            "stock": 20.0,
+            "delay": 4,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "downstream_capacity": 0,
+        "end_tick": 192,
+        "production_end": 192,
+        "start_hour": 8,
+        "step_minutes": 15,
+        "disturbances": [
+          {
+            "minute": 1440,
+            "kind": "capacity",
+            "value": 65
+          },
+          {
+            "minute": 1440,
+            "kind": "capacity_confirmation",
+            "value": 65,
+            "confirmed_at_minutes": 1440,
+            "valid_until_minutes": 2880,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic capacity restoration"
+          },
+          {
+            "minute": 1440,
+            "kind": "maintenance",
+            "maintenance_complete": true
+          },
+          {
+            "minute": 1440,
+            "kind": "production_confirmation",
+            "firm": "B",
+            "record": {
+              "owner": "production_owner_B",
+              "restart_ready": true,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 1
+            }
+          }
+        ],
+        "assumptions": [
+          "合成工程演练；公开资料仅支持问题和约束类别，所有数值均非现场校准。",
+          "四家持续产水48小时；同一混合设备画像、共同通知额度和恢复保障。",
+          "水类标签仅代表假设接纳约定；不证明化学相容、去除效率或达标排放。",
+          "仅一种固定暂存池和一台共享转移泵；新增资源不等于调度算法增益。",
+          "未来扰动留在私有场景中；控制器只看当前公开观测和已知产水计划。",
+          "接收量不是达标处理量；暂存、回送在途和剩余库存始终计入责任。",
+          "Only firm B may request production deferral under dated synthetic owner authority.",
+          "Deferred manufacturing remains unmet output; tail and restart cleaning add physical water. No monetary or water-saving claim."
+        ],
+        "substep_minutes": 5,
+        "auto_ack": true,
+        "capabilities": {
+          "A": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "on_off",
+            "duty_rate": 20,
+            "flow_levels": [
+              0,
+              20
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "B": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30,
+              40
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          },
+          "C": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "window",
+            "duty_rate": 15,
+            "flow_levels": [
+              0,
+              15
+            ],
+            "windows_minutes": [
+              [
+                0,
+                360
+              ],
+              [
+                420,
+                1800
+              ],
+              [
+                1860,
+                2880
+              ]
+            ],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "D": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          }
+        },
+        "notice_budget": {
+          "limit": 32,
+          "window_minutes": 1440
+        },
+        "restart_guard": {
+          "enabled": true
+        },
+        "recovery": {
+          "maintenance_complete": false,
+          "temporary_supply_available": false,
+          "process_ready": null,
+          "effluent_verified": null,
+          "capacity_confirmation": {
+            "value": 0,
+            "confirmed_at_minutes": 0,
+            "valid_until_minutes": 2880,
+            "revision": 0,
+            "basis": "assumed",
+            "source": "synthetic receiving acceptance; not actual plant approval"
+          }
+        },
+        "maintenance_plan": {
+          "expected_restore_minutes": 1440,
+          "announced_at_minutes": 0,
+          "revision": 0,
+          "basis": "assumed",
+          "source": "synthetic initial maintenance ETA; not receiving confirmation"
+        },
+        "disposition": {
+          "enabled": true,
+          "storage_capacity_m3": 120,
+          "pump_rate_m3_h": 20,
+          "travel_minutes": 30,
+          "ack_delay_minutes": 30,
+          "setup_minutes": 15,
+          "return_route": "R1",
+          "firm_types": {
+            "A": "pretreated_process",
+            "B": "pretreated_process",
+            "C": "pretreated_process",
+            "D": "saline_stream"
+          },
+          "acceptance": {
+            "storage": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            },
+            "plant": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process",
+                "saline_stream"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            }
+          },
+          "initial_inventory": {}
+        },
+        "production_control": {
+          "profiles": {
+            "B": {
+              "basis": "assumed",
+              "source": "v6 predeclared synthetic production profile; not field calibrated",
+              "owner": "production_owner_B",
+              "authorized": true,
+              "authorized_until_minutes": 2880,
+              "authority_revision": 0,
+              "ack_minutes": 90,
+              "stop_lead_minutes": 30,
+              "restart_lead_minutes": 90,
+              "batch_minutes": 120,
+              "min_pause_minutes": 60,
+              "residual_minutes": 120,
+              "residual_rate_m3_h": 4.0625,
+              "restart_flush_m3": 4,
+              "planned_units_per_hour": 100,
+              "restart_ready": false,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 0
+            }
+          }
+        },
+        "receiving_ceiling": {
+          "value": 0,
+          "valid_until_minutes": 1440,
+          "basis": "assumed",
+          "source": "declared no-receiving task constraint; not an ETA inference"
+        },
+        "production_floor": {
+          "rates_m3_h": {
+            "A": 13.0,
+            "C": 9.75,
+            "D": 6.5
+          },
+          "valid_until_minutes": 1440,
+          "basis": "assumed",
+          "source": "declared non-adjustable production floor for bounded infeasibility task"
+        }
+      }
+    },
+    {
+      "case_id": "unresolvable",
+      "variant": "unknown_tail",
+      "configuration": {
+        "name": "声明动作范围内无法容纳",
+        "firms": {
+          "A": {
+            "id": "A",
+            "name": "甲 · 精细加工",
+            "route": "R1",
+            "stock": 60,
+            "capacity": 90,
+            "production_rate": 13.0,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "B": {
+            "id": "B",
+            "name": "乙 · 批次生产",
+            "route": "R1",
+            "stock": 65,
+            "capacity": 100,
+            "production_rate": 16.25,
+            "rate": 20,
+            "max_rate": 40,
+            "ack_delay": 3,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "C": {
+            "id": "C",
+            "name": "丙 · 材料清洗",
+            "route": "R2",
+            "stock": 45,
+            "capacity": 85,
+            "production_rate": 9.75,
+            "rate": 15,
+            "max_rate": 35,
+            "ack_delay": 2,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          },
+          "D": {
+            "id": "D",
+            "name": "丁 · 表面处理",
+            "route": "R2",
+            "stock": 50,
+            "capacity": 75,
+            "production_rate": 6.5,
+            "rate": 10,
+            "max_rate": 30,
+            "ack_delay": 1,
+            "switch_delay": 1,
+            "min_hold": 4,
+            "batch_ticks": 8,
+            "production_enabled": true,
+            "production_multiplier": 1.0,
+            "last_switch": -4,
+            "last_release": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "routes": {
+          "R1": {
+            "id": "R1",
+            "name": "专线一",
+            "capacity": 60.0,
+            "buffer": 98.0,
+            "stock": 24.5,
+            "delay": 2,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          },
+          "R2": {
+            "id": "R2",
+            "name": "专线二",
+            "capacity": 45.0,
+            "buffer": 84.0,
+            "stock": 20.0,
+            "delay": 4,
+            "last_received": 0.0,
+            "uncontained": 0.0
+          }
+        },
+        "downstream_capacity": 0,
+        "end_tick": 192,
+        "production_end": 192,
+        "start_hour": 8,
+        "step_minutes": 15,
+        "disturbances": [
+          {
+            "minute": 1440,
+            "kind": "capacity",
+            "value": 65
+          },
+          {
+            "minute": 1440,
+            "kind": "capacity_confirmation",
+            "value": 65,
+            "confirmed_at_minutes": 1440,
+            "valid_until_minutes": 2880,
+            "revision": 1,
+            "basis": "assumed",
+            "source": "synthetic capacity restoration"
+          },
+          {
+            "minute": 1440,
+            "kind": "maintenance",
+            "maintenance_complete": true
+          },
+          {
+            "minute": 1440,
+            "kind": "production_confirmation",
+            "firm": "B",
+            "record": {
+              "owner": "production_owner_B",
+              "restart_ready": true,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 1
+            }
+          }
+        ],
+        "assumptions": [
+          "合成工程演练；公开资料仅支持问题和约束类别，所有数值均非现场校准。",
+          "四家持续产水48小时；同一混合设备画像、共同通知额度和恢复保障。",
+          "水类标签仅代表假设接纳约定；不证明化学相容、去除效率或达标排放。",
+          "仅一种固定暂存池和一台共享转移泵；新增资源不等于调度算法增益。",
+          "未来扰动留在私有场景中；控制器只看当前公开观测和已知产水计划。",
+          "接收量不是达标处理量；暂存、回送在途和剩余库存始终计入责任。",
+          "Only firm B may request production deferral under dated synthetic owner authority.",
+          "Deferred manufacturing remains unmet output; tail and restart cleaning add physical water. No monetary or water-saving claim."
+        ],
+        "substep_minutes": 5,
+        "auto_ack": true,
+        "capabilities": {
+          "A": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "on_off",
+            "duty_rate": 20,
+            "flow_levels": [
+              0,
+              20
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "B": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30,
+              40
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          },
+          "C": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "window",
+            "duty_rate": 15,
+            "flow_levels": [
+              0,
+              15
+            ],
+            "windows_minutes": [
+              [
+                0,
+                360
+              ],
+              [
+                420,
+                1800
+              ],
+              [
+                1860,
+                2880
+              ]
+            ],
+            "ramp_up_m3_h_per_minute": null,
+            "ramp_down_m3_h_per_minute": null
+          },
+          "D": {
+            "min_on_minutes": 10,
+            "min_off_minutes": 10,
+            "min_setpoint_hold_minutes": 60,
+            "max_starts_per_hour": 2,
+            "basis": "assumed",
+            "source": "v2 frozen synthetic profile; not field calibrated",
+            "mode": "variable",
+            "duty_rate": null,
+            "flow_levels": [
+              0,
+              10,
+              20,
+              30
+            ],
+            "windows_minutes": [],
+            "ramp_up_m3_h_per_minute": 2,
+            "ramp_down_m3_h_per_minute": 2
+          }
+        },
+        "notice_budget": {
+          "limit": 32,
+          "window_minutes": 1440
+        },
+        "restart_guard": {
+          "enabled": true
+        },
+        "recovery": {
+          "maintenance_complete": false,
+          "temporary_supply_available": false,
+          "process_ready": null,
+          "effluent_verified": null,
+          "capacity_confirmation": {
+            "value": 0,
+            "confirmed_at_minutes": 0,
+            "valid_until_minutes": 2880,
+            "revision": 0,
+            "basis": "assumed",
+            "source": "synthetic receiving acceptance; not actual plant approval"
+          }
+        },
+        "maintenance_plan": {
+          "expected_restore_minutes": 1440,
+          "announced_at_minutes": 0,
+          "revision": 0,
+          "basis": "assumed",
+          "source": "synthetic initial maintenance ETA; not receiving confirmation"
+        },
+        "disposition": {
+          "enabled": true,
+          "storage_capacity_m3": 120,
+          "pump_rate_m3_h": 20,
+          "travel_minutes": 30,
+          "ack_delay_minutes": 30,
+          "setup_minutes": 15,
+          "return_route": "R1",
+          "firm_types": {
+            "A": "pretreated_process",
+            "B": "pretreated_process",
+            "C": "pretreated_process",
+            "D": "saline_stream"
+          },
+          "acceptance": {
+            "storage": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            },
+            "plant": {
+              "known": true,
+              "allowed_types": [
+                "pretreated_process",
+                "saline_stream"
+              ],
+              "confirmed_at_minutes": 0,
+              "valid_until_minutes": 2880
+            }
+          },
+          "initial_inventory": {}
+        },
+        "production_control": {
+          "profiles": {
+            "B": {
+              "basis": "assumed",
+              "source": "v6 predeclared synthetic production profile; not field calibrated",
+              "owner": "production_owner_B",
+              "authorized": true,
+              "authorized_until_minutes": 2880,
+              "authority_revision": 0,
+              "ack_minutes": 30,
+              "stop_lead_minutes": 30,
+              "restart_lead_minutes": 45,
+              "batch_minutes": 120,
+              "min_pause_minutes": 60,
+              "residual_minutes": null,
+              "residual_rate_m3_h": null,
+              "restart_flush_m3": 4,
+              "planned_units_per_hour": 100,
+              "restart_ready": false,
+              "restart_valid_until_minutes": 2880,
+              "clearance_revision": 0
+            }
+          }
+        },
+        "receiving_ceiling": {
+          "value": 0,
+          "valid_until_minutes": 1440,
+          "basis": "assumed",
+          "source": "declared no-receiving task constraint; not an ETA inference"
+        },
+        "production_floor": {
+          "rates_m3_h": {
+            "A": 13.0,
+            "C": 9.75,
+            "D": 6.5
+          },
+          "valid_until_minutes": 1440,
+          "basis": "assumed",
+          "source": "declared non-adjustable production floor for bounded infeasibility task"
+        }
+      }
+    }
+  ],
+  "source_sha256": {
+    "xylem/wastewater_workbench_v6/comparison.py": "e767acfe217f08ef99c9157c40ac352413b6377b66921033ec144d1cb59647cb",
+    "xylem/wastewater_workbench_v6/tasks.py": "9d5da885cac700f536a0b7a60ac84a86fc86b4ad52bd13ef07e5c7e3f83353fc",
+    "xylem/wastewater_workbench_v6/engine.py": "7fb3aedff382358d74ded1940fa2a22190e2e5d735c0e47d01115efdc364c796",
+    "xylem/wastewater_workbench_v6/production.py": "3d9718812be2a4bf746588a1faf11c83f8b4dfee13f98442ca52e26da82f796d",
+    "xylem/wastewater_workbench_v6/scenarios.py": "d121b3a4a139ebccbc80333d9c24cb57b7b3e84cd9a88c673e76a8c27cada87a",
+    "xylem/wastewater_workbench_v6/planning.py": "986a5f3088d9468fadde0045e20513fe74f367ad9a43e05c6d81b4cb007987e3",
+    "xylem/wastewater_workbench_v6/controllers.py": "f3b48243518e18c3d3d56cebe323b71ccf5b50ebf80ac6bf442a413f69787401",
+    "xylem/wastewater_workbench_v5/disposition.py": "327ba4ce75dc0977fa66b0ec333da881105f24cfac620d1f20a75119f5051583",
+    "xylem/wastewater_workbench_v5/scenarios.py": "4a0c7ea9f7ef57e0ffbb13ada6f634217c744b7d07fb30a84d1a4adb67fb7066",
+    "xylem/wastewater_workbench_v3/scenarios.py": "dba72f31aaecf8a9710a6b4f69fa41a4c377ffc189e14504a81b586e80df1964",
+    "xylem/wastewater_workbench_v3/capabilities.py": "40609aff88b612a6c0c04fd6e9363af1c653dc9ea3561b47ca0120997b7f360f",
+    "xylem/wastewater_workbench_v3/recovery.py": "b7fd6b7e4d77000da3801ca8c5669b5ab576e25e237e7d0be7cee140e3b274e2",
+    "xylem/wastewater_workbench_v3/restart_guard.py": "7a3f7ac17b74a61eabba7f6de2b5d8ab34686a31e5d202f29da65f0007d512ec",
+    "xylem/wastewater_workbench/artifacts/review_v2/comparison_protocol.json": "6a853f1bb869fdfaf4af1177d214b17215f8aff40759dd31850c3251f834c2b2"
+  }
+}

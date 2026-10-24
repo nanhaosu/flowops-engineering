@@ -1,0 +1,29 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FlowOps · 污水异常协同处置</title><link rel="stylesheet" href="/static/style.css"><script defer src="/static/model.js"></script><script defer src="/static/app.js"></script><script defer src="/static/production.js"></script></head>
+<body>
+<header><a class="brand" href="#operations"><span class="mark">≈</span> FlowOps <small>园区污水协调</small></a><nav aria-label="工作视图"><button id="operations-tab" class="active">异常处置</button><button id="evidence-tab">公平对照</button></nav><span class="badge">V6 · 本机合成演练</span></header>
+<div id="message" role="status" aria-live="polite" hidden></div>
+<main id="operations">
+<div class="title"><div><div class="eyebrow">OPERATIONS / INCIDENT RESPONSE</div><h1>接纳不足时，让每一批水有去向</h1><p>修订企业排量，协调暂存，确认后执行；接纳恢复后继续完成回送。</p></div><button id="refresh" class="secondary">刷新状态</button></div>
+<section class="runbar"><div><strong id="clock">正在连接…</strong><span id="case-name"></span></div><div class="controls"><button data-step="1">+15分钟</button><button data-step="4">+1小时</button><button data-step="16">+4小时</button><a class="button secondary" href="/api/export" download="flowops-v5.json">导出</a></div></section>
+<p class="hint">推进时间会继续当前已发布安排；不会自动重新规划。可随时生成建议、修改并发布新的处置单。</p>
+<div id="metrics" class="metrics"></div>
+<div class="workspace"><div class="main-column">
+<section class="panel"><div class="panel-title"><h2>当前去向与剩余责任</h2><span id="receiving" class="pill"></span></div><div id="flow" class="flow"></div><div id="attention" class="attention"></div></section>
+<section class="panel"><div class="panel-title"><h2>1. 修订处置安排</h2><span id="draft-status" class="pill">草稿</span></div><p class="hint">先核对企业积压与水类。转入暂存只改变位置，回送仍与后续来水共享接纳能力。</p><div class="table-wrap"><table><thead><tr><th>企业 / 水类</th><th>企业库存</th><th>已暂存</th><th>排量目标 m³/h</th><th>暂存准入</th></tr></thead><tbody id="firms"></tbody></table></div>
+<div class="draft-tools"><button id="recommend-simple">填入强简单建议</button><button hidden id="recommend-coordinated" class="secondary">有限协同 · 作比较</button><button id="reset-draft" class="quiet">清空转移草稿</button></div><p id="recommendation" class="hint"></p>
+<div class="transfer-builder"><label>动作<select id="direction"><option value="store">转入暂存</option><option value="return">回送接纳管路</option></select></label><label>责任企业<select id="firm"></select></label><label>体积 m³<input id="volume" type="number" min="0.01" step="0.1" value="10"></label><button id="add-transfer" class="secondary">加入草稿</button></div>
+<div id="draft-transfers"></div><div class="publishbar"><button id="preview">预检整份草稿</button><button id="publish" class="primary" disabled>发布通知</button><span id="preflight-label">预检通过后才能发布</span></div><div id="preview-result" class="hint">预检会同时检查接纳条件、可用容量和通知额度。</div></section>
+<section class="panel" id="production-panel"></section>
+<section class="panel"><div class="panel-title"><h2>2. 跟踪实际转移与回送</h2><label class="inline"><input id="auto-ack" type="checkbox">按假定延迟自动反馈</label></div><div id="transfer-orders"></div><details><summary>设备排量通知与恢复保障</summary><div id="rate-orders"></div><div id="restart-records"></div></details></section>
+<section class="panel"><div class="panel-title"><h2>3. 核对发生了什么</h2><span class="pill">实际模拟记录</span></div><div id="chart"></div><details><summary>事件记录与原因</summary><div id="events" class="event-list"></div></details></section>
+</div><aside>
+<section class="panel"><h2>接纳条件</h2><div id="acceptance"></div><p class="hint">类别准入不代表化学相容或达标。当前未验证污染负荷。</p><form id="confirm-form"><label>接纳方<select id="destination"><option value="storage">额外暂存池</option><option value="plant">污水厂</option></select></label><label>确认有效时长 / 分钟<input id="valid-for" type="number" min="5" step="5" value="240"></label><div class="button-pair"><button type="submit">注入合成确认</button><button id="revoke" type="button" class="secondary">设为未知</button></div></form></section>
+<section class="panel"><h2>资源与通知额度</h2><div id="resources"></div></section>
+<section class="panel"><h2>演练场景</h2><label>事件任务<select id="case"></select></label><label>参数组合<select id="variant"><option value="base">示范参数</option><option value="slow_response">较慢确认 / 较长尾水</option><option value="unknown_tail">尾水条件未知</option></select></label><label class="inline"><input id="resource-enabled" type="checkbox" checked>启用额外暂存资源</label><button id="reset" class="secondary full">保存当前分支并新建演练</button><p id="scenario-description" class="hint"></p></section>
+<section class="panel"><h2>保存与恢复</h2><input id="branch-name" aria-label="分支名称" placeholder="分支名称，如：确认失效前"><button id="fork" class="secondary full">保存当前分支</button><label>已保存分支<select id="branches"></select></label><button id="restore" class="quiet full">恢复分支副本</button></section>
+</aside></div>
+<details class="limits"><summary>模型边界与输入依据</summary><ul id="limitations"></ul><p>设备、容量、时序和水类均为显式演练假设，未接入真实工业控制。公开工程资料仅支持约束类别，不能视为现场标定。人工任务收益未测量。</p><p><a href="https://www.mee.gov.cn/xxgk2018/xxgk/xxgk03/202012/t20201217_813570.html" target="_blank" rel="noreferrer">园区污水接纳与应急责任依据</a></p></details>
+</main>
+<main id="evidence" hidden><div class="title"><div><div class="eyebrow">EVIDENCE / SAME RESOURCES, SAME INFORMATION</div><h1>动态任务的结果与代价</h1><p>相同信息、建议、行动权限和执行器；水量、延期生产和未完成责任分别保留。</p></div></div><div id="evidence-results" class="panel">正在读取冻结结果…</div></main>
+<footer>FlowOps v6 · 接收体积 ≠ 达标处理体积 · 订单到达 ≠ 全部处置完成 · 旧版本与负结果保留</footer>
+</body></html>

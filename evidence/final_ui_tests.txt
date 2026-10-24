@@ -1,0 +1,17 @@
+✔ remaining liability includes all contained water, not only emergency storage (0.9692ms)
+✔ unknown and zero retain different labels (17.2146ms)
+✔ completed storage order is arrival not treatment completion (0.4235ms)
+✔ changed draft invalidates publication even if token exists (0.2281ms)
+✔ invalid numeric transfer is refused in UI rather than JSON null (1.9995ms)
+✔ HTML in external labels is escaped (0.2504ms)
+✔ changing production target invalidates the exact mixed draft (0.137ms)
+✔ manufacturing debt and future tail are separate from contained water (0.1463ms)
+✔ manual production feedback is available only for live order states (0.1712ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 317.7714

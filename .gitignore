@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.venv/
+**/runtime/
+*.pending
+.env
+.env.*
+!.env.example
+node_modules/
+.DS_Store
+**/tmp*/
+xylem/wastewater_workbench_v6/artifacts/tasks/*/step_*.json
+xylem/wastewater_workbench_v6/artifacts/tasks/*/A_STATUS_TABLE.csv

@@ -1,0 +1,21 @@
+name: Engineering checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.11', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python -B -m unittest discover -s xylem/wastewater_workbench_v6/tests -p 'test_*.py' -q
+      - run: node --test xylem/wastewater_workbench_v6/tests/ui.cjs
+      - run: python -B verify_release.py

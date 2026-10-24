@@ -1,0 +1,17 @@
+{
+  "status": "pass",
+  "compared_trajectories": 36,
+  "metric_changes": [],
+  "snapshots": [
+    {
+      "version": "v6_r1",
+      "snapshot_matches_frozen_sources": true
+    },
+    {
+      "version": "v6_r2",
+      "snapshot_matches_frozen_sources": true
+    }
+  ],
+  "current_sources_match_r2": true,
+  "boundary": "Same aggregate metrics do not imply identical source/events; r1 and r2 have distinct frozen provenance."
+}

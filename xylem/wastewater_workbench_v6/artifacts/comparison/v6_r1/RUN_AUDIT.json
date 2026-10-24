@@ -1,0 +1,10 @@
+{
+  "status": "pass",
+  "completed_rows": 36,
+  "all_finish_at_minutes": 2880,
+  "protocol_sha256": "11e3feb306c2bb788dc3147662d92b1dc4184818e2bbb9a55d7246a7ac2a21c2",
+  "source_unchanged": true,
+  "all_pair_input_advice_rights_and_bundles_identical": true,
+  "all_metrics_finite": true,
+  "max_balance_error": 3.1377567211166024e-11
+}

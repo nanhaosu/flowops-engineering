@@ -1,0 +1,9 @@
+{
+  "status": "pass",
+  "files": 116,
+  "scanned_objects": 180,
+  "bytes": 20035772,
+  "rejected_paths": [],
+  "scan_scope": "staged publication allowlist; private path and credential patterns plus archive member scan",
+  "limitation": "pattern scan plus explicit allowlist, not a proof that arbitrary content can never contain sensitive information"
+}

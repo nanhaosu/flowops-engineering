@@ -1,0 +1,4466 @@
+{
+  "frozen_at_utc": "2026-10-22T15:09:51.955312+00:00",
+  "protocol_sha256": "3737454e7df57285d8b1e8d9c7dc91959d9a251c8d122fd4a6c32a721418f6df",
+  "source_sha256": {
+    "engine.py": "90b8c711da02e38036192adbb7827b374341ace9b934bc18fbda76300aad2dd1",
+    "scenario.py": "b8fa5fc12108d74e46b006ed1721441829c0650ca2a50f542e17f9c22034af79",
+    "planning.py": "295e2f738f487e840b82d1be6674fcfdf094b5a744f37bf6a81b94f3cbbf5536",
+    "comparison.py": "74519bcd08fd898f232f66038926c60c88195473879cb565c270ce90498cffe9"
+  },
+  "protocol": {
+    "schema": 1,
+    "label": "合成工程演练；不是现场验证或最优性证明",
+    "methods": [
+      "hold",
+      "simple",
+      "preview"
+    ],
+    "decision_every_ticks": 4,
+    "forecast_horizon_ticks": 16,
+    "production_policy": "unchanged_all_methods",
+    "information_policy": "public_state_only_no_future_disturbances",
+    "execution_policy": "same_publish_ack_switch_hold_transit_and_receiver_engine",
+    "comparison_primary": "preview minus simple total uncontained m3; lower is better",
+    "objective_order": [
+      "forecast_uncontained",
+      "forecast_terminal_stored",
+      "new_notices",
+      "absolute_rate_change"
+    ],
+    "simple_method": "urgency reservation + best one-coordinate correction or one pair swap, including current rates",
+    "preview_method": "simple action + 8 parameterized rule seeds + maximum rates + one local neighborhood of simple",
+    "primary_tolerance": 1e-06,
+    "stopping_policy": "run every case to tick64; retain terminal storage and transit",
+    "replay_policy": "three arms start from deep-copied identical configuration and share exogenous event schedule",
+    "decision_timing": "decision precedes next cell; newly injected cell events are observable at its end",
+    "retention_policy": "all cases, ties, losses, compute cost and traces retained; no outcome-based selection",
+    "revision_policy": "no controller tuning after this frozen matrix is run; corrections require explicit new version",
+    "limitations": [
+      "公开工程结构启发的合成参数，非现场实测。",
+      "不核算污染物反应、处置费用、真人操作效率或外运。",
+      "本对照限定排量协调；所有方案保持生产安排不变，避免用减产获得虚假优势。",
+      "候选选择含强规则并不保证实际长期更优；预测假定当前条件持续。",
+      "只比较此规则族，不声称超越所有商业控制器或全局最优。"
+    ],
+    "variants": [
+      {
+        "id": "easy",
+        "stock": 0.25,
+        "production": 0.65,
+        "buffers": 1.4,
+        "lag": 0
+      },
+      {
+        "id": "ordinary",
+        "stock": 0.55,
+        "production": 1.0,
+        "buffers": 1.0,
+        "lag": 0
+      },
+      {
+        "id": "tight",
+        "stock": 0.85,
+        "production": 1.0,
+        "buffers": 0.65,
+        "lag": 2
+      },
+      {
+        "id": "overloaded",
+        "stock": 0.9,
+        "production": 1.25,
+        "buffers": 0.8,
+        "lag": 4
+      }
+    ],
+    "cases": [
+      {
+        "id": "none--easy",
+        "family": "none",
+        "variant": {
+          "id": "easy",
+          "stock": 0.25,
+          "production": 0.65,
+          "buffers": 1.4,
+          "lag": 0
+        },
+        "configuration": {
+          "name": "none / easy",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 22.5,
+              "capacity": 90,
+              "production_rate": 13.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 25.0,
+              "capacity": 100,
+              "production_rate": 16.25,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 21.25,
+              "capacity": 85,
+              "production_rate": 9.75,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 18.75,
+              "capacity": 75,
+              "production_rate": 6.5,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 98.0,
+              "stock": 24.5,
+              "delay": 2,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 84.0,
+              "stock": 20.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "none--ordinary",
+        "family": "none",
+        "variant": {
+          "id": "ordinary",
+          "stock": 0.55,
+          "production": 1.0,
+          "buffers": 1.0,
+          "lag": 0
+        },
+        "configuration": {
+          "name": "none / ordinary",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 49.50000000000001,
+              "capacity": 90,
+              "production_rate": 20.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 55.00000000000001,
+              "capacity": 100,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 46.75000000000001,
+              "capacity": 85,
+              "production_rate": 15.0,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 41.25,
+              "capacity": 75,
+              "production_rate": 10.0,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 70.0,
+              "stock": 30.0,
+              "delay": 2,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 60.0,
+              "stock": 20.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "none--tight",
+        "family": "none",
+        "variant": {
+          "id": "tight",
+          "stock": 0.85,
+          "production": 1.0,
+          "buffers": 0.65,
+          "lag": 2
+        },
+        "configuration": {
+          "name": "none / tight",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 76.5,
+              "capacity": 90,
+              "production_rate": 20.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 85.0,
+              "capacity": 100,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 72.25,
+              "capacity": 85,
+              "production_rate": 15.0,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 63.75,
+              "capacity": 75,
+              "production_rate": 10.0,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 45.5,
+              "stock": 30.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 39.0,
+              "stock": 20.0,
+              "delay": 6,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "none--overloaded",
+        "family": "none",
+        "variant": {
+          "id": "overloaded",
+          "stock": 0.9,
+          "production": 1.25,
+          "buffers": 0.8,
+          "lag": 4
+        },
+        "configuration": {
+          "name": "none / overloaded",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 81.0,
+              "capacity": 90,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 90.0,
+              "capacity": 100,
+              "production_rate": 31.25,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 76.5,
+              "capacity": 85,
+              "production_rate": 18.75,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 67.5,
+              "capacity": 75,
+              "production_rate": 12.5,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 56.0,
+              "stock": 30.0,
+              "delay": 6,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 48.0,
+              "stock": 20.0,
+              "delay": 8,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "derate--easy",
+        "family": "derate",
+        "variant": {
+          "id": "easy",
+          "stock": 0.25,
+          "production": 0.65,
+          "buffers": 1.4,
+          "lag": 0
+        },
+        "configuration": {
+          "name": "derate / easy",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 22.5,
+              "capacity": 90,
+              "production_rate": 13.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 25.0,
+              "capacity": 100,
+              "production_rate": 16.25,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 21.25,
+              "capacity": 85,
+              "production_rate": 9.75,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 18.75,
+              "capacity": 75,
+              "production_rate": 6.5,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 98.0,
+              "stock": 24.5,
+              "delay": 2,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 84.0,
+              "stock": 20.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 8,
+              "kind": "capacity",
+              "value": 30
+            },
+            {
+              "tick": 32,
+              "kind": "capacity",
+              "value": 65
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "derate--ordinary",
+        "family": "derate",
+        "variant": {
+          "id": "ordinary",
+          "stock": 0.55,
+          "production": 1.0,
+          "buffers": 1.0,
+          "lag": 0
+        },
+        "configuration": {
+          "name": "derate / ordinary",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 49.50000000000001,
+              "capacity": 90,
+              "production_rate": 20.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 55.00000000000001,
+              "capacity": 100,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 46.75000000000001,
+              "capacity": 85,
+              "production_rate": 15.0,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 41.25,
+              "capacity": 75,
+              "production_rate": 10.0,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 70.0,
+              "stock": 30.0,
+              "delay": 2,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 60.0,
+              "stock": 20.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 8,
+              "kind": "capacity",
+              "value": 30
+            },
+            {
+              "tick": 32,
+              "kind": "capacity",
+              "value": 65
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "derate--tight",
+        "family": "derate",
+        "variant": {
+          "id": "tight",
+          "stock": 0.85,
+          "production": 1.0,
+          "buffers": 0.65,
+          "lag": 2
+        },
+        "configuration": {
+          "name": "derate / tight",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 76.5,
+              "capacity": 90,
+              "production_rate": 20.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 85.0,
+              "capacity": 100,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 72.25,
+              "capacity": 85,
+              "production_rate": 15.0,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 63.75,
+              "capacity": 75,
+              "production_rate": 10.0,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 45.5,
+              "stock": 30.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 39.0,
+              "stock": 20.0,
+              "delay": 6,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 8,
+              "kind": "capacity",
+              "value": 30
+            },
+            {
+              "tick": 32,
+              "kind": "capacity",
+              "value": 65
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "derate--overloaded",
+        "family": "derate",
+        "variant": {
+          "id": "overloaded",
+          "stock": 0.9,
+          "production": 1.25,
+          "buffers": 0.8,
+          "lag": 4
+        },
+        "configuration": {
+          "name": "derate / overloaded",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 81.0,
+              "capacity": 90,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 90.0,
+              "capacity": 100,
+              "production_rate": 31.25,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 76.5,
+              "capacity": 85,
+              "production_rate": 18.75,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 67.5,
+              "capacity": 75,
+              "production_rate": 12.5,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 56.0,
+              "stock": 30.0,
+              "delay": 6,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 48.0,
+              "stock": 20.0,
+              "delay": 8,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 8,
+              "kind": "capacity",
+              "value": 30
+            },
+            {
+              "tick": 32,
+              "kind": "capacity",
+              "value": 65
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "late_recovery--easy",
+        "family": "late_recovery",
+        "variant": {
+          "id": "easy",
+          "stock": 0.25,
+          "production": 0.65,
+          "buffers": 1.4,
+          "lag": 0
+        },
+        "configuration": {
+          "name": "late_recovery / easy",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 22.5,
+              "capacity": 90,
+              "production_rate": 13.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 25.0,
+              "capacity": 100,
+              "production_rate": 16.25,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 21.25,
+              "capacity": 85,
+              "production_rate": 9.75,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 18.75,
+              "capacity": 75,
+              "production_rate": 6.5,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 98.0,
+              "stock": 24.5,
+              "delay": 2,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 84.0,
+              "stock": 20.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 8,
+              "kind": "capacity",
+              "value": 30
+            },
+            {
+              "tick": 44,
+              "kind": "capacity",
+              "value": 65
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "late_recovery--ordinary",
+        "family": "late_recovery",
+        "variant": {
+          "id": "ordinary",
+          "stock": 0.55,
+          "production": 1.0,
+          "buffers": 1.0,
+          "lag": 0
+        },
+        "configuration": {
+          "name": "late_recovery / ordinary",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 49.50000000000001,
+              "capacity": 90,
+              "production_rate": 20.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 55.00000000000001,
+              "capacity": 100,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 46.75000000000001,
+              "capacity": 85,
+              "production_rate": 15.0,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 41.25,
+              "capacity": 75,
+              "production_rate": 10.0,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 70.0,
+              "stock": 30.0,
+              "delay": 2,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 60.0,
+              "stock": 20.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 8,
+              "kind": "capacity",
+              "value": 30
+            },
+            {
+              "tick": 44,
+              "kind": "capacity",
+              "value": 65
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "late_recovery--tight",
+        "family": "late_recovery",
+        "variant": {
+          "id": "tight",
+          "stock": 0.85,
+          "production": 1.0,
+          "buffers": 0.65,
+          "lag": 2
+        },
+        "configuration": {
+          "name": "late_recovery / tight",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 76.5,
+              "capacity": 90,
+              "production_rate": 20.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 85.0,
+              "capacity": 100,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 72.25,
+              "capacity": 85,
+              "production_rate": 15.0,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 63.75,
+              "capacity": 75,
+              "production_rate": 10.0,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 45.5,
+              "stock": 30.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 39.0,
+              "stock": 20.0,
+              "delay": 6,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 8,
+              "kind": "capacity",
+              "value": 30
+            },
+            {
+              "tick": 44,
+              "kind": "capacity",
+              "value": 65
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "late_recovery--overloaded",
+        "family": "late_recovery",
+        "variant": {
+          "id": "overloaded",
+          "stock": 0.9,
+          "production": 1.25,
+          "buffers": 0.8,
+          "lag": 4
+        },
+        "configuration": {
+          "name": "late_recovery / overloaded",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 81.0,
+              "capacity": 90,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 90.0,
+              "capacity": 100,
+              "production_rate": 31.25,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 76.5,
+              "capacity": 85,
+              "production_rate": 18.75,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 67.5,
+              "capacity": 75,
+              "production_rate": 12.5,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 56.0,
+              "stock": 30.0,
+              "delay": 6,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 48.0,
+              "stock": 20.0,
+              "delay": 8,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 8,
+              "kind": "capacity",
+              "value": 30
+            },
+            {
+              "tick": 44,
+              "kind": "capacity",
+              "value": 65
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "slow_ack--easy",
+        "family": "slow_ack",
+        "variant": {
+          "id": "easy",
+          "stock": 0.25,
+          "production": 0.65,
+          "buffers": 1.4,
+          "lag": 0
+        },
+        "configuration": {
+          "name": "slow_ack / easy",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 22.5,
+              "capacity": 90,
+              "production_rate": 13.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 25.0,
+              "capacity": 100,
+              "production_rate": 16.25,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 21.25,
+              "capacity": 85,
+              "production_rate": 9.75,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 18.75,
+              "capacity": 75,
+              "production_rate": 6.5,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 98.0,
+              "stock": 24.5,
+              "delay": 2,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 84.0,
+              "stock": 20.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 4,
+              "kind": "response",
+              "firm": "B",
+              "value": 8
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "slow_ack--ordinary",
+        "family": "slow_ack",
+        "variant": {
+          "id": "ordinary",
+          "stock": 0.55,
+          "production": 1.0,
+          "buffers": 1.0,
+          "lag": 0
+        },
+        "configuration": {
+          "name": "slow_ack / ordinary",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 49.50000000000001,
+              "capacity": 90,
+              "production_rate": 20.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 55.00000000000001,
+              "capacity": 100,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 46.75000000000001,
+              "capacity": 85,
+              "production_rate": 15.0,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 41.25,
+              "capacity": 75,
+              "production_rate": 10.0,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 70.0,
+              "stock": 30.0,
+              "delay": 2,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 60.0,
+              "stock": 20.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 4,
+              "kind": "response",
+              "firm": "B",
+              "value": 8
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "slow_ack--tight",
+        "family": "slow_ack",
+        "variant": {
+          "id": "tight",
+          "stock": 0.85,
+          "production": 1.0,
+          "buffers": 0.65,
+          "lag": 2
+        },
+        "configuration": {
+          "name": "slow_ack / tight",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 76.5,
+              "capacity": 90,
+              "production_rate": 20.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 85.0,
+              "capacity": 100,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 72.25,
+              "capacity": 85,
+              "production_rate": 15.0,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 63.75,
+              "capacity": 75,
+              "production_rate": 10.0,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 45.5,
+              "stock": 30.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 39.0,
+              "stock": 20.0,
+              "delay": 6,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 4,
+              "kind": "response",
+              "firm": "B",
+              "value": 8
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "slow_ack--overloaded",
+        "family": "slow_ack",
+        "variant": {
+          "id": "overloaded",
+          "stock": 0.9,
+          "production": 1.25,
+          "buffers": 0.8,
+          "lag": 4
+        },
+        "configuration": {
+          "name": "slow_ack / overloaded",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 81.0,
+              "capacity": 90,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 90.0,
+              "capacity": 100,
+              "production_rate": 31.25,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 76.5,
+              "capacity": 85,
+              "production_rate": 18.75,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 67.5,
+              "capacity": 75,
+              "production_rate": 12.5,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 56.0,
+              "stock": 30.0,
+              "delay": 6,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 48.0,
+              "stock": 20.0,
+              "delay": 8,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 4,
+              "kind": "response",
+              "firm": "B",
+              "value": 8
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "production_bias--easy",
+        "family": "production_bias",
+        "variant": {
+          "id": "easy",
+          "stock": 0.25,
+          "production": 0.65,
+          "buffers": 1.4,
+          "lag": 0
+        },
+        "configuration": {
+          "name": "production_bias / easy",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 22.5,
+              "capacity": 90,
+              "production_rate": 13.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 25.0,
+              "capacity": 100,
+              "production_rate": 16.25,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 21.25,
+              "capacity": 85,
+              "production_rate": 9.75,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 18.75,
+              "capacity": 75,
+              "production_rate": 6.5,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 98.0,
+              "stock": 24.5,
+              "delay": 2,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 84.0,
+              "stock": 20.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 16,
+              "kind": "production",
+              "firm": "C",
+              "value": 1.6
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "production_bias--ordinary",
+        "family": "production_bias",
+        "variant": {
+          "id": "ordinary",
+          "stock": 0.55,
+          "production": 1.0,
+          "buffers": 1.0,
+          "lag": 0
+        },
+        "configuration": {
+          "name": "production_bias / ordinary",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 49.50000000000001,
+              "capacity": 90,
+              "production_rate": 20.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 55.00000000000001,
+              "capacity": 100,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 46.75000000000001,
+              "capacity": 85,
+              "production_rate": 15.0,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 41.25,
+              "capacity": 75,
+              "production_rate": 10.0,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 70.0,
+              "stock": 30.0,
+              "delay": 2,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 60.0,
+              "stock": 20.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 16,
+              "kind": "production",
+              "firm": "C",
+              "value": 1.6
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "production_bias--tight",
+        "family": "production_bias",
+        "variant": {
+          "id": "tight",
+          "stock": 0.85,
+          "production": 1.0,
+          "buffers": 0.65,
+          "lag": 2
+        },
+        "configuration": {
+          "name": "production_bias / tight",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 76.5,
+              "capacity": 90,
+              "production_rate": 20.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 85.0,
+              "capacity": 100,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 72.25,
+              "capacity": 85,
+              "production_rate": 15.0,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 63.75,
+              "capacity": 75,
+              "production_rate": 10.0,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 45.5,
+              "stock": 30.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 39.0,
+              "stock": 20.0,
+              "delay": 6,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 16,
+              "kind": "production",
+              "firm": "C",
+              "value": 1.6
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "production_bias--overloaded",
+        "family": "production_bias",
+        "variant": {
+          "id": "overloaded",
+          "stock": 0.9,
+          "production": 1.25,
+          "buffers": 0.8,
+          "lag": 4
+        },
+        "configuration": {
+          "name": "production_bias / overloaded",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 81.0,
+              "capacity": 90,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 90.0,
+              "capacity": 100,
+              "production_rate": 31.25,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 76.5,
+              "capacity": 85,
+              "production_rate": 18.75,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 67.5,
+              "capacity": 75,
+              "production_rate": 12.5,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 56.0,
+              "stock": 30.0,
+              "delay": 6,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 48.0,
+              "stock": 20.0,
+              "delay": 8,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 16,
+              "kind": "production",
+              "firm": "C",
+              "value": 1.6
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "combined--easy",
+        "family": "combined",
+        "variant": {
+          "id": "easy",
+          "stock": 0.25,
+          "production": 0.65,
+          "buffers": 1.4,
+          "lag": 0
+        },
+        "configuration": {
+          "name": "combined / easy",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 22.5,
+              "capacity": 90,
+              "production_rate": 13.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 25.0,
+              "capacity": 100,
+              "production_rate": 16.25,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 21.25,
+              "capacity": 85,
+              "production_rate": 9.75,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 18.75,
+              "capacity": 75,
+              "production_rate": 6.5,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 98.0,
+              "stock": 24.5,
+              "delay": 2,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 84.0,
+              "stock": 20.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 8,
+              "kind": "capacity",
+              "value": 30
+            },
+            {
+              "tick": 12,
+              "kind": "response",
+              "firm": "B",
+              "value": 8
+            },
+            {
+              "tick": 20,
+              "kind": "production",
+              "firm": "C",
+              "value": 1.6
+            },
+            {
+              "tick": 44,
+              "kind": "capacity",
+              "value": 65
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "combined--ordinary",
+        "family": "combined",
+        "variant": {
+          "id": "ordinary",
+          "stock": 0.55,
+          "production": 1.0,
+          "buffers": 1.0,
+          "lag": 0
+        },
+        "configuration": {
+          "name": "combined / ordinary",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 49.50000000000001,
+              "capacity": 90,
+              "production_rate": 20.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 55.00000000000001,
+              "capacity": 100,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 46.75000000000001,
+              "capacity": 85,
+              "production_rate": 15.0,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 41.25,
+              "capacity": 75,
+              "production_rate": 10.0,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 70.0,
+              "stock": 30.0,
+              "delay": 2,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 60.0,
+              "stock": 20.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 8,
+              "kind": "capacity",
+              "value": 30
+            },
+            {
+              "tick": 12,
+              "kind": "response",
+              "firm": "B",
+              "value": 8
+            },
+            {
+              "tick": 20,
+              "kind": "production",
+              "firm": "C",
+              "value": 1.6
+            },
+            {
+              "tick": 44,
+              "kind": "capacity",
+              "value": 65
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "combined--tight",
+        "family": "combined",
+        "variant": {
+          "id": "tight",
+          "stock": 0.85,
+          "production": 1.0,
+          "buffers": 0.65,
+          "lag": 2
+        },
+        "configuration": {
+          "name": "combined / tight",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 76.5,
+              "capacity": 90,
+              "production_rate": 20.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 85.0,
+              "capacity": 100,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 72.25,
+              "capacity": 85,
+              "production_rate": 15.0,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 63.75,
+              "capacity": 75,
+              "production_rate": 10.0,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 45.5,
+              "stock": 30.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 39.0,
+              "stock": 20.0,
+              "delay": 6,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 8,
+              "kind": "capacity",
+              "value": 30
+            },
+            {
+              "tick": 12,
+              "kind": "response",
+              "firm": "B",
+              "value": 8
+            },
+            {
+              "tick": 20,
+              "kind": "production",
+              "firm": "C",
+              "value": 1.6
+            },
+            {
+              "tick": 44,
+              "kind": "capacity",
+              "value": 65
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "combined--overloaded",
+        "family": "combined",
+        "variant": {
+          "id": "overloaded",
+          "stock": 0.9,
+          "production": 1.25,
+          "buffers": 0.8,
+          "lag": 4
+        },
+        "configuration": {
+          "name": "combined / overloaded",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 81.0,
+              "capacity": 90,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 90.0,
+              "capacity": 100,
+              "production_rate": 31.25,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 76.5,
+              "capacity": 85,
+              "production_rate": 18.75,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 67.5,
+              "capacity": 75,
+              "production_rate": 12.5,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 56.0,
+              "stock": 30.0,
+              "delay": 6,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 48.0,
+              "stock": 20.0,
+              "delay": 8,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 8,
+              "kind": "capacity",
+              "value": 30
+            },
+            {
+              "tick": 12,
+              "kind": "response",
+              "firm": "B",
+              "value": 8
+            },
+            {
+              "tick": 20,
+              "kind": "production",
+              "firm": "C",
+              "value": 1.6
+            },
+            {
+              "tick": 44,
+              "kind": "capacity",
+              "value": 65
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "outage--easy",
+        "family": "outage",
+        "variant": {
+          "id": "easy",
+          "stock": 0.25,
+          "production": 0.65,
+          "buffers": 1.4,
+          "lag": 0
+        },
+        "configuration": {
+          "name": "outage / easy",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 22.5,
+              "capacity": 90,
+              "production_rate": 13.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 25.0,
+              "capacity": 100,
+              "production_rate": 16.25,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 21.25,
+              "capacity": 85,
+              "production_rate": 9.75,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 18.75,
+              "capacity": 75,
+              "production_rate": 6.5,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 98.0,
+              "stock": 24.5,
+              "delay": 2,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 84.0,
+              "stock": 20.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 12,
+              "kind": "capacity",
+              "value": 0
+            },
+            {
+              "tick": 24,
+              "kind": "capacity",
+              "value": 65
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "outage--ordinary",
+        "family": "outage",
+        "variant": {
+          "id": "ordinary",
+          "stock": 0.55,
+          "production": 1.0,
+          "buffers": 1.0,
+          "lag": 0
+        },
+        "configuration": {
+          "name": "outage / ordinary",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 49.50000000000001,
+              "capacity": 90,
+              "production_rate": 20.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 55.00000000000001,
+              "capacity": 100,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 46.75000000000001,
+              "capacity": 85,
+              "production_rate": 15.0,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 41.25,
+              "capacity": 75,
+              "production_rate": 10.0,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 70.0,
+              "stock": 30.0,
+              "delay": 2,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 60.0,
+              "stock": 20.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 12,
+              "kind": "capacity",
+              "value": 0
+            },
+            {
+              "tick": 24,
+              "kind": "capacity",
+              "value": 65
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "outage--tight",
+        "family": "outage",
+        "variant": {
+          "id": "tight",
+          "stock": 0.85,
+          "production": 1.0,
+          "buffers": 0.65,
+          "lag": 2
+        },
+        "configuration": {
+          "name": "outage / tight",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 76.5,
+              "capacity": 90,
+              "production_rate": 20.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 85.0,
+              "capacity": 100,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 72.25,
+              "capacity": 85,
+              "production_rate": 15.0,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 63.75,
+              "capacity": 75,
+              "production_rate": 10.0,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 45.5,
+              "stock": 30.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 39.0,
+              "stock": 20.0,
+              "delay": 6,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 12,
+              "kind": "capacity",
+              "value": 0
+            },
+            {
+              "tick": 24,
+              "kind": "capacity",
+              "value": 65
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "outage--overloaded",
+        "family": "outage",
+        "variant": {
+          "id": "overloaded",
+          "stock": 0.9,
+          "production": 1.25,
+          "buffers": 0.8,
+          "lag": 4
+        },
+        "configuration": {
+          "name": "outage / overloaded",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 81.0,
+              "capacity": 90,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 90.0,
+              "capacity": 100,
+              "production_rate": 31.25,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 76.5,
+              "capacity": 85,
+              "production_rate": 18.75,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 67.5,
+              "capacity": 75,
+              "production_rate": 12.5,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 56.0,
+              "stock": 30.0,
+              "delay": 6,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 48.0,
+              "stock": 20.0,
+              "delay": 8,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 12,
+              "kind": "capacity",
+              "value": 0
+            },
+            {
+              "tick": 24,
+              "kind": "capacity",
+              "value": 65
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "brief_dip--easy",
+        "family": "brief_dip",
+        "variant": {
+          "id": "easy",
+          "stock": 0.25,
+          "production": 0.65,
+          "buffers": 1.4,
+          "lag": 0
+        },
+        "configuration": {
+          "name": "brief_dip / easy",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 22.5,
+              "capacity": 90,
+              "production_rate": 13.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 25.0,
+              "capacity": 100,
+              "production_rate": 16.25,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 21.25,
+              "capacity": 85,
+              "production_rate": 9.75,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 18.75,
+              "capacity": 75,
+              "production_rate": 6.5,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 98.0,
+              "stock": 24.5,
+              "delay": 2,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 84.0,
+              "stock": 20.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 10,
+              "kind": "capacity",
+              "value": 20
+            },
+            {
+              "tick": 18,
+              "kind": "capacity",
+              "value": 65
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "brief_dip--ordinary",
+        "family": "brief_dip",
+        "variant": {
+          "id": "ordinary",
+          "stock": 0.55,
+          "production": 1.0,
+          "buffers": 1.0,
+          "lag": 0
+        },
+        "configuration": {
+          "name": "brief_dip / ordinary",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 49.50000000000001,
+              "capacity": 90,
+              "production_rate": 20.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 55.00000000000001,
+              "capacity": 100,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 46.75000000000001,
+              "capacity": 85,
+              "production_rate": 15.0,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 41.25,
+              "capacity": 75,
+              "production_rate": 10.0,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 70.0,
+              "stock": 30.0,
+              "delay": 2,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 60.0,
+              "stock": 20.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 10,
+              "kind": "capacity",
+              "value": 20
+            },
+            {
+              "tick": 18,
+              "kind": "capacity",
+              "value": 65
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "brief_dip--tight",
+        "family": "brief_dip",
+        "variant": {
+          "id": "tight",
+          "stock": 0.85,
+          "production": 1.0,
+          "buffers": 0.65,
+          "lag": 2
+        },
+        "configuration": {
+          "name": "brief_dip / tight",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 76.5,
+              "capacity": 90,
+              "production_rate": 20.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 85.0,
+              "capacity": 100,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 72.25,
+              "capacity": 85,
+              "production_rate": 15.0,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 63.75,
+              "capacity": 75,
+              "production_rate": 10.0,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 45.5,
+              "stock": 30.0,
+              "delay": 4,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 39.0,
+              "stock": 20.0,
+              "delay": 6,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 10,
+              "kind": "capacity",
+              "value": 20
+            },
+            {
+              "tick": 18,
+              "kind": "capacity",
+              "value": 65
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      },
+      {
+        "id": "brief_dip--overloaded",
+        "family": "brief_dip",
+        "variant": {
+          "id": "overloaded",
+          "stock": 0.9,
+          "production": 1.25,
+          "buffers": 0.8,
+          "lag": 4
+        },
+        "configuration": {
+          "name": "brief_dip / overloaded",
+          "firms": {
+            "A": {
+              "id": "A",
+              "name": "甲 · 精细加工",
+              "route": "R1",
+              "stock": 81.0,
+              "capacity": 90,
+              "production_rate": 25.0,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "B": {
+              "id": "B",
+              "name": "乙 · 批次生产",
+              "route": "R1",
+              "stock": 90.0,
+              "capacity": 100,
+              "production_rate": 31.25,
+              "rate": 20,
+              "max_rate": 40,
+              "ack_delay": 3,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "C": {
+              "id": "C",
+              "name": "丙 · 材料清洗",
+              "route": "R2",
+              "stock": 76.5,
+              "capacity": 85,
+              "production_rate": 18.75,
+              "rate": 15,
+              "max_rate": 35,
+              "ack_delay": 2,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            },
+            "D": {
+              "id": "D",
+              "name": "丁 · 表面处理",
+              "route": "R2",
+              "stock": 67.5,
+              "capacity": 75,
+              "production_rate": 12.5,
+              "rate": 10,
+              "max_rate": 30,
+              "ack_delay": 1,
+              "switch_delay": 1,
+              "min_hold": 4,
+              "batch_ticks": 8,
+              "production_enabled": true,
+              "production_multiplier": 1.0,
+              "last_switch": -4,
+              "last_release": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "routes": {
+            "R1": {
+              "id": "R1",
+              "name": "专线一",
+              "capacity": 60.0,
+              "buffer": 56.0,
+              "stock": 30.0,
+              "delay": 6,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            },
+            "R2": {
+              "id": "R2",
+              "name": "专线二",
+              "capacity": 45.0,
+              "buffer": 48.0,
+              "stock": 20.0,
+              "delay": 8,
+              "last_received": 0.0,
+              "uncontained": 0.0
+            }
+          },
+          "downstream_capacity": 65.0,
+          "end_tick": 64,
+          "production_end": 48,
+          "start_hour": 8,
+          "step_minutes": 15,
+          "disturbances": [
+            {
+              "tick": 10,
+              "kind": "capacity",
+              "value": 20
+            },
+            {
+              "tick": 18,
+              "kind": "capacity",
+              "value": 65
+            }
+          ],
+          "assumptions": [
+            "合成工程演练：所有数值均为设计输入，非现场实测。",
+            "固定接纳路线；仅核算水量，不计算污染物反应或出水质量。",
+            "每15分钟按均匀流量结算；池内并行进出，不能证明步内峰值安全。",
+            "预处理后固定滞留/输送时间，排量按5 m³/h档位调整。",
+            "20:00结束已知产水计划，随后4小时继续排送；末端库存和在途均保留。"
+          ]
+        }
+      }
+    ]
+  }
+}
